@@ -1,0 +1,2614 @@
+<!DOCTYPE html><html lang="vi"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Cổng Thông Tin Chuyển Đổi Số</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 200px;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #74b9ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-icon i {
+            font-size: 1.4rem;
+            color: white;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            height: 100%;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .nav-menu a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .nav-menu a span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            min-width: 250px;
+            height: 40px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            flex: 1;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb-nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #5a67d8;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e9ecef 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .page-header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.2rem;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .page-title .title-icon {
+            font-size: 2rem;
+            color: #667eea;
+            background: white;
+            padding: 0.8rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .dashboard-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .date-filter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            font-size: 0.9rem;
+        }
+
+        .date-filter select {
+            border: none;
+            background: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Navigation */
+        .dashboard-nav {
+            background: white;
+            border-radius: 15px;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+
+        .dashboard-nav-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .dashboard-nav-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .dashboard-nav-btn:hover:not(.active) {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .dashboard-nav-btn i {
+            font-size: 1.5rem;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            display: none;
+        }
+
+        .dashboard-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* KPI Cards */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-title {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .kpi-icon.primary { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .kpi-icon.success { background: linear-gradient(135deg, #28a745, #20c997); }
+        .kpi-icon.warning { background: linear-gradient(135deg, #ffc107, #fd7e14); }
+        .kpi-icon.danger { background: linear-gradient(135deg, #dc3545, #e83e8c); }
+        .kpi-icon.info { background: linear-gradient(135deg, #17a2b8, #6f42c1); }
+
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .kpi-change {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .kpi-change.positive {
+            color: #28a745;
+        }
+
+        .kpi-change.negative {
+            color: #dc3545;
+        }
+
+        .kpi-change.neutral {
+            color: #6c757d;
+        }
+
+        /* Chart Containers */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chart-subtitle {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chart-action-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .chart-action-btn:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .chart-canvas {
+            position: relative;
+            height: 300px;
+        }
+
+        .chart-canvas.large {
+            height: 400px;
+        }
+
+        /* Data Tables */
+        .data-table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            background: #f8f9fa;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table-controls {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .table-search {
+            padding: 0.5rem 0.8rem;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            width: 200px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .data-table td {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active { background: #d4edda; color: #155724; }
+        .status-completed { background: #cce7ff; color: #004085; }
+        .status-planning { background: #fff3cd; color: #856404; }
+        .status-paused { background: #f8d7da; color: #721c24; }
+
+        .progress-bar-mini {
+            width: 100px;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill-mini {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+
+        .analytics-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .analytics-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .analytics-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .analytics-subtitle {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .analytics-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Prediction Cards */
+        .prediction-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prediction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(50px, -50px);
+        }
+
+        .prediction-header {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+        }
+
+        .prediction-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .prediction-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .prediction-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .prediction-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* Real-time Indicators */
+        .realtime-section {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            margin-bottom: 2rem;
+        }
+
+        .realtime-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .realtime-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .realtime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .realtime-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .realtime-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .realtime-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.3rem;
+        }
+
+        .realtime-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .realtime-timestamp {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-section {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .dashboard-controls {
+                justify-content: space-between;
+            }
+
+            .dashboard-nav {
+                flex-wrap: wrap;
+            }
+
+            .dashboard-nav-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .kpi-section {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-canvas {
+                height: 250px;
+            }
+
+            .realtime-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <span class="logo-text">X01</span>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dssangkien.html">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Sáng kiến</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsthidua.html">
+                            <i class="fas fa-trophy"></i>
+                            <span>Thi đua</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dstintuc.html">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Tin tức</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard.html" class="active">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsvinhdanh.html">
+                            <i class="fas fa-star"></i>
+                            <span>Vinh danh</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <nav class="breadcrumb-nav">
+                <a href="#"><i class="fas fa-home"></i> Trang chủ</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Dashboard</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-header-container">
+            <div class="dashboard-header">
+                <div class="page-title">
+                    <div class="title-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div>
+                        <h1>Dashboard Chuyển Đổi Số</h1>
+                        <p style="color: #666; font-size: 1rem; margin-top: 0.5rem;">
+                            Tổng quan về tình hình triển khai các sáng kiến và hiệu suất hệ thống
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="dashboard-controls">
+                    <div class="date-filter">
+                        <i class="fas fa-calendar-alt"></i>
+                        <select id="dateRange">
+                            <option value="7">7 ngày qua</option>
+                            <option value="30" selected="">30 ngày qua</option>
+                            <option value="90">90 ngày qua</option>
+                            <option value="365">1 năm qua</option>
+                        </select>
+                    </div>
+                    <button class="refresh-btn" id="refreshData">
+                        <i class="fas fa-sync-alt"></i>
+                        Làm mới
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation -->
+            <div class="dashboard-nav">
+                <button class="dashboard-nav-btn active" data-dashboard="overview">
+                    <i class="fas fa-th-large"></i>
+                    <span>Tổng quan</span>
+                </button>
+                <button class="dashboard-nav-btn" data-dashboard="initiatives">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Sáng kiến</span>
+                </button>
+                <button class="dashboard-nav-btn" data-dashboard="performance">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Hiệu suất</span>
+                </button>
+                <button class="dashboard-nav-btn" data-dashboard="analytics">
+                    <i class="fas fa-brain"></i>
+                    <span>Phân tích</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Overview Dashboard -->
+        <div class="dashboard-content active" id="overview">
+            <!-- KPI Cards -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Tổng số Sáng kiến</div>
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">156</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Sáng kiến Hoàn thành</div>
+                        <div class="kpi-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">89</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+18% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Tiết kiệm Chi phí</div>
+                        <div class="kpi-icon warning">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">45.2B</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+25% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">ROI Trung bình</div>
+                        <div class="kpi-icon info">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">324%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Nhân viên Tham gia</div>
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">2,341</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+15% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Mức độ Hài lòng</div>
+                        <div class="kpi-icon success">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">94.8%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+3% so với tháng trước</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Tiến độ Sáng kiến theo Thời gian</div>
+                            <div class="chart-subtitle">Số lượng sáng kiến hoàn thành mỗi tháng</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="progressOverviewChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Phân bố theo Trạng thái</div>
+                            <div class="chart-subtitle">Tình hình hiện tại các sáng kiến</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="statusDistributionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Top Chi nhánh Đóng góp</div>
+                            <div class="chart-subtitle">Số lượng sáng kiến theo phòng ban</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="divisionContributionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Tiết kiệm Chi phí</div>
+                            <div class="chart-subtitle">Tổng tiết kiệm theo quý</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="costSavingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Data -->
+            <div class="realtime-section">
+                <div class="realtime-header">
+                    <div class="realtime-title">
+                        <span class="live-indicator"></span>
+                        Dữ liệu Thời gian Thực
+                    </div>
+                    <div style="font-size: 0.8rem; color: #666;">
+                        Cập nhật lần cuối: <span id="lastUpdate">just now</span>
+                    </div>
+                </div>
+                <div class="realtime-grid">
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="activeUsers">1,234</div>
+                        <div class="realtime-label">Người dùng đang online</div>
+                        <div class="realtime-timestamp">2 giây trước</div>
+                    </div>
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="systemUptime">99.8%</div>
+                        <div class="realtime-label">Uptime hệ thống</div>
+                        <div class="realtime-timestamp">liên tục</div>
+                    </div>
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="dataProcessed">4.2GB</div>
+                        <div class="realtime-label">Dữ liệu xử lý/giờ</div>
+                        <div class="realtime-timestamp">5 giây trước</div>
+                    </div>
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="responseTime">1.8s</div>
+                        <div class="realtime-label">Thời gian phản hồi</div>
+                        <div class="realtime-timestamp">1 giây trước</div>
+                    </div>
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="errors">0</div>
+                        <div class="realtime-label">Lỗi hệ thống</div>
+                        <div class="realtime-timestamp">0 lỗi hôm nay</div>
+                    </div>
+                    <div class="realtime-item">
+                        <div class="realtime-value" id="completedToday">23</div>
+                        <div class="realtime-label">Hoàn thành hôm nay</div>
+                        <div class="realtime-timestamp">10 phút trước</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Initiatives Dashboard -->
+        <div class="dashboard-content" id="initiatives">
+            <!-- KPI Cards for Initiatives -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Đang Triển khai</div>
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">67</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+5 sáng kiến mới</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Chờ Phê duyệt</div>
+                        <div class="kpi-icon warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">23</div>
+                    <div class="kpi-change neutral">
+                        <i class="fas fa-minus"></i>
+                        <span>Không đổi</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Tạm Dừng</div>
+                        <div class="kpi-icon danger">
+                            <i class="fas fa-pause"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">8</div>
+                    <div class="kpi-change negative">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>-2 so với tuần trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Tiến độ Trung bình</div>
+                        <div class="kpi-icon info">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">68.5%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+3.2% so với tuần trước</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts for Initiatives -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Tiến độ theo Chi nhánh</div>
+                            <div class="chart-subtitle">Phần trăm hoàn thành trung bình</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="divisionProgressChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Timeline Triển khai</div>
+                            <div class="chart-subtitle">Lịch trình các sáng kiến quan trọng</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Phân loại theo Công nghệ</div>
+                            <div class="chart-subtitle">Số lượng sáng kiến theo lĩnh vực</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="technologyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Tỷ lệ Thành công</div>
+                            <div class="chart-subtitle">Theo độ ưu tiên và phức tạp</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="successRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Initiatives Table -->
+            <div class="data-table-container">
+                <div class="table-header">
+                    <div class="table-title">Sáng kiến Đang Triển khai</div>
+                    <div class="table-controls">
+                        <input type="text" class="table-search" placeholder="Tìm kiếm sáng kiến...">
+                        <button class="chart-action-btn">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                        <button class="chart-action-btn">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tên Sáng kiến</th>
+                            <th>Chi nhánh</th>
+                            <th>Trạng thái</th>
+                            <th>Tiến độ</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>ROI dự kiến</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tự động hóa báo cáo tài chính</strong></td>
+                            <td>Phòng Công nghệ</td>
+                            <td><span class="status-badge status-active">Đang triển khai</span></td>
+                            <td>
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill-mini" style="width: 75%;"></div>
+                                </div>
+                                75%
+                            </td>
+                            <td>15/07/2025</td>
+                            <td>30/08/2025</td>
+                            <td>320%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Chatbot hỗ trợ khách hàng 24/7</strong></td>
+                            <td>Phòng CSKH</td>
+                            <td><span class="status-badge status-active">Đang triển khai</span></td>
+                            <td>
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill-mini" style="width: 45%;"></div>
+                                </div>
+                                45%
+                            </td>
+                            <td>10/07/2025</td>
+                            <td>15/09/2025</td>
+                            <td>280%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hệ thống quản lý tài liệu số</strong></td>
+                            <td>Phòng Hành chính</td>
+                            <td><span class="status-badge status-completed">Hoàn thành</span></td>
+                            <td>
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill-mini" style="width: 100%;"></div>
+                                </div>
+                                100%
+                            </td>
+                            <td>05/07/2025</td>
+                            <td>25/07/2025</td>
+                            <td>180%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Platform Marketing Automation</strong></td>
+                            <td>Phòng Marketing</td>
+                            <td><span class="status-badge status-planning">Lập kế hoạch</span></td>
+                            <td>
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill-mini" style="width: 15%;"></div>
+                                </div>
+                                15%
+                            </td>
+                            <td>08/07/2025</td>
+                            <td>20/10/2025</td>
+                            <td>450%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IoT Monitoring Data Center</strong></td>
+                            <td>Phòng Vận hành</td>
+                            <td><span class="status-badge status-paused">Tạm dừng</span></td>
+                            <td>
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill-mini" style="width: 35%;"></div>
+                                </div>
+                                35%
+                            </td>
+                            <td>20/06/2025</td>
+                            <td>30/09/2025</td>
+                            <td>250%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Performance Dashboard -->
+        <div class="dashboard-content" id="performance">
+            <!-- Performance KPIs -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">ROI Tổng thể</div>
+                        <div class="kpi-icon success">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">324%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+8% so với Q trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Tăng Năng suất</div>
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">67%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12% so với năm trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Giảm Chi phí Vận hành</div>
+                        <div class="kpi-icon warning">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">45%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+5% so với Q trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Thời gian Phản hồi</div>
+                        <div class="kpi-icon info">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">1.8s</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>-0.3s so với tháng trước</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Charts -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">ROI theo Thời gian</div>
+                            <div class="chart-subtitle">Tỷ suất sinh lời 12 tháng gần nhất</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="roiTimeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Hiệu suất theo Lĩnh vực</div>
+                            <div class="chart-subtitle">So sánh năng suất các phòng ban</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="performanceDivisionChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Chi phí vs Lợi ích</div>
+                            <div class="chart-subtitle">Phân tích cost-benefit các dự án</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="costBenefitChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Chỉ số Hiệu suất Tổng hợp</div>
+                            <div class="chart-subtitle">KPI dashboard theo thời gian</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="kpiDashboardChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics Grid -->
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <div class="analytics-icon primary">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div>
+                            <div class="analytics-title">Hiệu suất Hệ thống</div>
+                            <div class="analytics-subtitle">Các chỉ số kỹ thuật</div>
+                        </div>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="metric-item">
+                            <span class="metric-label">CPU Usage</span>
+                            <span class="metric-value">23%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Memory Usage</span>
+                            <span class="metric-value">67%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Disk I/O</span>
+                            <span class="metric-value">45 MB/s</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Network</span>
+                            <span class="metric-value">1.2 GB/s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <div class="analytics-icon success">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <div class="analytics-title">Hiệu suất Nhân sự</div>
+                            <div class="analytics-subtitle">Productivity metrics</div>
+                        </div>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="metric-item">
+                            <span class="metric-label">Tasks/Day</span>
+                            <span class="metric-value">8.5</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Quality Score</span>
+                            <span class="metric-value">94%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">On-time Delivery</span>
+                            <span class="metric-value">89%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Training Hours</span>
+                            <span class="metric-value">120h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <div class="analytics-icon warning">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div>
+                            <div class="analytics-title">Hiệu quả Tài chính</div>
+                            <div class="analytics-subtitle">Financial performance</div>
+                        </div>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="metric-item">
+                            <span class="metric-label">Cost per Project</span>
+                            <span class="metric-value">2.1B VNĐ</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Revenue Impact</span>
+                            <span class="metric-value">15.8B VNĐ</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Payback Period</span>
+                            <span class="metric-value">8.5 tháng</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">NPV</span>
+                            <span class="metric-value">45.2B VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Dashboard -->
+        <div class="dashboard-content" id="analytics">
+            <!-- Analytics KPIs -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Độ chính xác Dự đoán</div>
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">92.3%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+2.1% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Insights Được tạo</div>
+                        <div class="kpi-icon info">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">1,247</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+156 tuần này</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Data Quality Score</div>
+                        <div class="kpi-icon success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">96.7%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+1.2% so với tuần trước</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-title">Automation Rate</div>
+                        <div class="kpi-icon warning">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-value">78.9%</div>
+                    <div class="kpi-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+5.4% so với tháng trước</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Cards -->
+            <div class="analytics-grid">
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        <div class="prediction-title">Dự đoán Q4/2025</div>
+                        <div class="prediction-subtitle">Số sáng kiến hoàn thành</div>
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-value">145</div>
+                        <div class="prediction-change">
+                            <i class="fas fa-trending-up"></i>
+                            <span>+18% so với Q3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        <div class="prediction-title">ROI Dự kiến 2026</div>
+                        <div class="prediction-subtitle">Tỷ suất lợi nhuận</div>
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-value">420%</div>
+                        <div class="prediction-change">
+                            <i class="fas fa-trending-up"></i>
+                            <span>+25% so với 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prediction-card">
+                    <div class="prediction-header">
+                        <div class="prediction-title">Tiết kiệm Dự kiến</div>
+                        <div class="prediction-subtitle">12 tháng tới</div>
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-value">125B</div>
+                        <div class="prediction-change">
+                            <i class="fas fa-trending-up"></i>
+                            <span>VNĐ tiết kiệm dự kiến</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Analytics Charts -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Xu hướng và Dự đoán</div>
+                            <div class="chart-subtitle">Machine Learning predictions</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas large">
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Correlation Matrix</div>
+                            <div class="chart-subtitle">Mối tương quan giữa các yếu tố</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="correlationChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Risk Assessment</div>
+                            <div class="chart-subtitle">Phân tích rủi ro dự án</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Optimization Opportunities</div>
+                            <div class="chart-subtitle">Cơ hội tối ưu hóa</div>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="chart-action-btn" title="Tải xuống">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="chart-action-btn" title="Toàn màn hình">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-canvas">
+                        <canvas id="optimizationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dashboardBtns = document.querySelectorAll('.dashboard-nav-btn');
+            const dashboardContents = document.querySelectorAll('.dashboard-content');
+
+            dashboardBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetDashboard = this.dataset.dashboard;
+
+                    // Remove active class from all buttons and contents
+                    dashboardBtns.forEach(b => b.classList.remove('active'));
+                    dashboardContents.forEach(c => c.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active');
+                    document.getElementById(targetDashboard).classList.add('active');
+
+                    // Initialize charts for the selected dashboard
+                    setTimeout(() => initCharts(targetDashboard), 100);
+                });
+            });
+
+            // Date range change handler
+            document.getElementById('dateRange').addEventListener('change', function() {
+                console.log('Date range changed:', this.value);
+                // Refresh data based on new date range
+                refreshDashboardData();
+            });
+
+            // Refresh button handler
+            document.getElementById('refreshData').addEventListener('click', function() {
+                this.querySelector('i').style.animation = 'spin 1s linear infinite';
+                refreshDashboardData();
+                setTimeout(() => {
+                    this.querySelector('i').style.animation = '';
+                }, 1000);
+            });
+
+            // Initialize charts for overview dashboard
+            setTimeout(() => initCharts('overview'), 100);
+
+            // Start real-time data updates
+            startRealTimeUpdates();
+        });
+
+        // Initialize charts based on dashboard type
+        function initCharts(dashboardType) {
+            switch(dashboardType) {
+                case 'overview':
+                    initOverviewCharts();
+                    break;
+                case 'initiatives':
+                    initInitiativesCharts();
+                    break;
+                case 'performance':
+                    initPerformanceCharts();
+                    break;
+                case 'analytics':
+                    initAnalyticsCharts();
+                    break;
+            }
+        }
+
+        // Overview Charts
+        function initOverviewCharts() {
+            // Progress Overview Chart
+            const progressCtx = document.getElementById('progressOverviewChart');
+            if (progressCtx) {
+                new Chart(progressCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+                        datasets: [{
+                            label: 'Sáng kiến hoàn thành',
+                            data: [12, 19, 15, 25, 22, 30, 28, 35, 32, 40, 38, 45],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }, {
+                            label: 'Mục tiêu',
+                            data: [15, 20, 18, 28, 25, 32, 30, 38, 35, 42, 40, 48],
+                            borderColor: '#28a745',
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5],
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Status Distribution Chart
+            const statusCtx = document.getElementById('statusDistributionChart');
+            if (statusCtx) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Đang triển khai', 'Hoàn thành', 'Chờ phê duyệt', 'Tạm dừng'],
+                        datasets: [{
+                            data: [67, 89, 23, 8],
+                            backgroundColor: [
+                                '#667eea',
+                                '#28a745',
+                                '#ffc107',
+                                '#dc3545'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Division Contribution Chart
+            const divisionCtx = document.getElementById('divisionContributionChart');
+            if (divisionCtx) {
+                new Chart(divisionCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['IT', 'Tài chính', 'HR', 'Marketing', 'Vận hành', 'CSKH'],
+                        datasets: [{
+                            label: 'Số sáng kiến',
+                            data: [45, 32, 28, 25, 20, 18],
+                            backgroundColor: [
+                                '#667eea',
+                                '#28a745',
+                                '#ffc107',
+                                '#17a2b8',
+                                '#dc3545',
+                                '#6f42c1'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Cost Savings Chart
+            const costCtx = document.getElementById('costSavingsChart');
+            if (costCtx) {
+                new Chart(costCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4 (dự kiến)'],
+                        datasets: [{
+                            label: 'Tiết kiệm (Tỷ VNĐ)',
+                            data: [8.5, 12.3, 15.8, 18.2],
+                            backgroundColor: '#28a745'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initiatives Charts
+        function initInitiativesCharts() {
+            // Division Progress Chart
+            const divProgressCtx = document.getElementById('divisionProgressChart');
+            if (divProgressCtx) {
+                new Chart(divProgressCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['IT', 'Tài chính', 'HR', 'Marketing', 'Vận hành', 'CSKH'],
+                        datasets: [{
+                            label: 'Tiến độ trung bình (%)',
+                            data: [85, 72, 68, 45, 78, 62],
+                            backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                            borderColor: '#667eea',
+                            pointBackgroundColor: '#667eea'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Timeline Chart
+            const timelineCtx = document.getElementById('timelineChart');
+            if (timelineCtx) {
+                new Chart(timelineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                        datasets: [{
+                            label: 'Kế hoạch',
+                            data: [20, 35, 50, 68, 85, 100],
+                            borderColor: '#28a745',
+                            backgroundColor: 'transparent',
+                            borderDash: [5, 5]
+                        }, {
+                            label: 'Thực tế',
+                            data: [18, 32, 45, null, null, null],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Technology Chart
+            const techCtx = document.getElementById('technologyChart');
+            if (techCtx) {
+                new Chart(techCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['AI/ML', 'RPA', 'Blockchain', 'IoT', 'Cloud', 'Mobile'],
+                        datasets: [{
+                            data: [35, 28, 15, 12, 18, 22],
+                            backgroundColor: [
+                                '#667eea',
+                                '#28a745',
+                                '#ffc107',
+                                '#dc3545',
+                                '#17a2b8',
+                                '#6f42c1'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Success Rate Chart
+            const successCtx = document.getElementById('successRateChart');
+            if (successCtx) {
+                new Chart(successCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Dự án',
+                            data: [
+                                {x: 1, y: 95}, {x: 2, y: 88}, {x: 3, y: 92},
+                                {x: 1, y: 78}, {x: 2, y: 85}, {x: 3, y: 72},
+                                {x: 1, y: 90}, {x: 2, y: 82}, {x: 3, y: 68}
+                            ],
+                            backgroundColor: 'rgba(102, 126, 234, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Độ ưu tiên (1: Thấp, 2: Trung bình, 3: Cao)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Tỷ lệ thành công (%)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Performance Charts (FIXED)
+        function initPerformanceCharts() {
+            // ROI Time Chart
+            const roiTimeCtx = document.getElementById('roiTimeChart');
+            if (roiTimeCtx) {
+                new Chart(roiTimeCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+                        datasets: [{
+                            label: 'ROI (%)',
+                            data: [150, 180, 220, 250, 280, 300, 315, 330, 345, 360, 380, 400],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            tension: 0.4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Performance Division Chart (FIXED)
+            const perfDivCtx = document.getElementById('performanceDivisionChart');
+            if (perfDivCtx) {
+                new Chart(perfDivCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['IT', 'Tài chính', 'HR', 'Marketing', 'Vận hành', 'CSKH'],
+                        datasets: [{
+                            label: 'Năng suất (%)',
+                            data: [85, 78, 72, 68, 75, 70],
+                            backgroundColor: '#667eea'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Cost Benefit Chart
+            const costBenefitCtx = document.getElementById('costBenefitChart');
+            if (costBenefitCtx) {
+                new Chart(costBenefitCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Dự án',
+                            data: [
+                                {x: 2.5, y: 8.5}, {x: 3.2, y: 12.8}, {x: 1.8, y: 6.2},
+                                {x: 4.1, y: 15.6}, {x: 2.9, y: 10.3}, {x: 3.8, y: 14.2}
+                            ],
+                            backgroundColor: 'rgba(255, 193, 7, 0.6)',
+                            pointRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Chi phí (Tỷ VNĐ)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Lợi ích (Tỷ VNĐ)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // KPI Dashboard Chart
+            const kpiCtx = document.getElementById('kpiDashboardChart');
+            if (kpiCtx) {
+                new Chart(kpiCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6'],
+                        datasets: [{
+                            label: 'Hiệu suất',
+                            data: [65, 72, 78, 75, 82, 85],
+                            borderColor: '#667eea',
+                            backgroundColor: 'transparent'
+                        }, {
+                            label: 'Chất lượng',
+                            data: [70, 75, 82, 85, 88, 92],
+                            borderColor: '#28a745',
+                            backgroundColor: 'transparent'
+                        }, {
+                            label: 'Tiết kiệm',
+                            data: [45, 52, 58, 65, 72, 78],
+                            borderColor: '#ffc107',
+                            backgroundColor: 'transparent'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Analytics Charts
+        function initAnalyticsCharts() {
+            // Trends Chart
+            const trendsCtx = document.getElementById('trendsChart');
+            if (trendsCtx) {
+                new Chart(trendsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7 (Dự đoán)', 'T8 (Dự đoán)'],
+                        datasets: [{
+                            label: 'Thực tế',
+                            data: [45, 52, 48, 61, 58, 67, null, null],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            fill: true
+                        }, {
+                            label: 'Dự đoán',
+                            data: [null, null, null, null, null, 67, 72, 78],
+                            borderColor: '#ff6b6b',
+                            backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                            borderDash: [5, 5],
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Correlation Chart
+            const corrCtx = document.getElementById('correlationChart');
+            if (corrCtx) {
+                new Chart(corrCtx, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [{
+                            label: 'Ngân sách vs ROI',
+                            data: [
+                                {x: 1.5, y: 180}, {x: 2.8, y: 320}, {x: 4.2, y: 450},
+                                {x: 3.1, y: 280}, {x: 2.5, y: 250}, {x: 3.8, y: 380}
+                            ],
+                            backgroundColor: 'rgba(102, 126, 234, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Ngân sách (Tỷ VNĐ)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'ROI (%)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Risk Chart
+            const riskCtx = document.getElementById('riskChart');
+            if (riskCtx) {
+                new Chart(riskCtx, {
+                    type: 'bubble',
+                    data: {
+                        datasets: [{
+                            label: 'Dự án',
+                            data: [
+                                {x: 3, y: 8, r: 15}, {x: 5, y: 6, r: 20}, {x: 7, y: 4, r: 10},
+                                {x: 4, y: 7, r: 25}, {x: 6, y: 5, r: 18}, {x: 8, y: 3, r: 12}
+                            ],
+                            backgroundColor: 'rgba(220, 53, 69, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Mức độ rủi ro (1-10)'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Tác động (1-10)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Optimization Chart
+            const optCtx = document.getElementById('optimizationChart');
+            if (optCtx) {
+                new Chart(optCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Tự động hóa', 'Tối ưu quy trình', 'Đào tạo', 'Công nghệ mới', 'Outsourcing'],
+                        datasets: [{
+                            label: 'Tiềm năng tiết kiệm (%)',
+                            data: [35, 28, 22, 18, 15],
+                            backgroundColor: [
+                                '#28a745', '#667eea', '#ffc107', '#17a2b8', '#6f42c1'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Real-time data updates
+        function startRealTimeUpdates() {
+            setInterval(() => {
+                updateRealTimeData();
+            }, 5000); // Update every 5 seconds
+        }
+
+        function updateRealTimeData() {
+            // Simulate real-time data updates
+            const elements = {
+                'activeUsers': () => Math.floor(Math.random() * 200) + 1200,
+                'systemUptime': () => (99.5 + Math.random() * 0.5).toFixed(1) + '%',
+                'dataProcessed': () => (3.8 + Math.random() * 0.8).toFixed(1) + 'GB',
+                'responseTime': () => (1.5 + Math.random() * 0.6).toFixed(1) + 's',
+                'errors': () => Math.floor(Math.random() * 3),
+                'completedToday': () => Math.floor(Math.random() * 10) + 20
+            };
+
+            Object.entries(elements).forEach(([id, generator]) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = generator();
+                }
+            });
+
+            // Update timestamp
+            const lastUpdate = document.getElementById('lastUpdate');
+            if (lastUpdate) {
+                lastUpdate.textContent = 'vừa xong';
+            }
+        }
+
+        // Refresh dashboard data
+        function refreshDashboardData() {
+            console.log('Refreshing dashboard data...');
+            // Simulate API call delay
+            setTimeout(() => {
+                console.log('Dashboard data refreshed');
+                // Re-initialize charts with new data
+                const activeTab = document.querySelector('.dashboard-nav-btn.active').dataset.dashboard;
+                initCharts(activeTab);
+            }, 1000);
+        }
+
+        // Animation for KPI values
+        function animateKPIValues() {
+            const kpiValues = document.querySelectorAll('.kpi-value');
+            kpiValues.forEach(value => {
+                const text = value.textContent;
+                const number = parseFloat(text.replace(/[^\d.]/g, ''));
+                const suffix = text.replace(/[\d.]/g, '');
+                
+                if (!isNaN(number)) {
+                    let current = 0;
+                    const increment = number / 30;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            value.textContent = text;
+                            clearInterval(timer);
+                        } else {
+                            value.textContent = Math.floor(current) + suffix;
+                        }
+                    }, 50);
+                }
+            });
+        }
+
+        // Initialize animations when page loads
+        setTimeout(animateKPIValues, 500);
+    </script>
+
+
+</body></html>

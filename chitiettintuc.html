@@ -1,0 +1,1637 @@
+<!DOCTYPE html><html lang="vi"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết bài viết - Cổng Thông Tin Chuyển Đổi Số</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 200px;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #74b9ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-icon i {
+            font-size: 1.4rem;
+            color: white;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            height: 100%;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .nav-menu a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .nav-menu a span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            min-width: 250px;
+            height: 40px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            flex: 1;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb-nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #5a67d8;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        .article-header {
+            padding: 2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .author-avatar-large {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .author-role {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .article-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .article-actions {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafbfc;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .action-button:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .action-button.liked {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .action-button.bookmarked {
+            background: #f39c12;
+            color: white;
+            border-color: #f39c12;
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            opacity: 0.3;
+        }
+
+        .article-body {
+            padding: 2rem;
+        }
+
+        .article-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .article-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-text h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .article-text ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .article-text li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comments Section - New Design */
+        .comments-section {
+            padding: 2rem;
+            border-top: 1px solid #f0f0f0;
+            background: #f8f9fb;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .comments-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comments-count {
+            background: #f39c12;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .sort-comments {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+            min-width: 140px;
+        }
+
+        /* Comment Form - Updated Design */
+        .comment-form {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 0;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .comment-form-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .current-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #5a67d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        .comment-input-wrapper {
+            flex: 1;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 0;
+            border: none;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: none;
+            background: transparent;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .comment-textarea:focus {
+            outline: none;
+        }
+
+        .comment-textarea::placeholder {
+            color: #999;
+        }
+
+        .comment-form-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #f0f0f0;
+            background: #fafbfc;
+        }
+
+        .comment-submit-btn {
+            padding: 0.7rem 1.5rem;
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .comment-submit-btn:hover {
+            background: #e67e22;
+        }
+
+        .comment-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Comments List - New Design */
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .comment {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 0;
+            border-bottom: none;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .comment:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .comment:last-child {
+            border-radius: 0 0 12px 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comment:only-child {
+            border-radius: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comment:hover {
+            background: #fafbfc;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .comment-author {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #5a67d8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .comment-author-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .comment-author-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .comment-time {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .comment-actions {
+            position: relative;
+        }
+
+        .comment-menu-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .comment-menu-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .comment-content {
+            margin-bottom: 1rem;
+            margin-left: 3rem;
+        }
+
+        .comment-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .comment-footer {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-left: 3rem;
+        }
+
+        .comment-stats {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .comment-interaction {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .interaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #666;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .interaction-btn:hover {
+            color: #667eea;
+        }
+
+        .interaction-btn.liked {
+            color: #667eea;
+        }
+
+        .interaction-btn.liked i {
+            color: #667eea;
+        }
+
+        /* Show More Button */
+        .show-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .show-more-btn:hover {
+            background: #f8f9fa;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        .widget-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafbfc;
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .widget-content {
+            padding: 1.5rem;
+        }
+
+        /* Related Articles */
+        .related-article {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .related-article:hover {
+            background: #f8f9fa;
+        }
+
+        .related-article:not(:last-child) {
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .related-thumb {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .related-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .related-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-meta {
+            font-size: 0.8rem;
+            color: #999;
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Author Info Widget */
+        .author-widget {
+            text-align: center;
+        }
+
+        .author-widget-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0 auto 1rem auto;
+            border: 4px solid #e9ecef;
+        }
+
+        .author-widget-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-widget-role {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .author-widget-bio {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-widget-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-stat {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .author-stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .author-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .follow-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .follow-btn:hover {
+            background: #5a67d8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .breadcrumb-container {
+                padding: 0 1rem;
+            }
+
+            .main-container {
+                padding: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .article-actions {
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .comment-form-header {
+                padding: 1rem;
+            }
+
+            .comment-form-footer {
+                padding: 0.8rem 1rem;
+            }
+
+            .comments-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .comment-content {
+                margin-left: 3rem;
+            }
+
+            .comment-footer {
+                margin-left: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding: 0 0.5rem;
+            }
+
+            .breadcrumb-container {
+                padding: 0 0.5rem;
+            }
+
+            .main-container {
+                padding: 0.5rem;
+            }
+
+            .article-content,
+            .sidebar-widget {
+                border-radius: 10px;
+            }
+
+            .article-header,
+            .article-body,
+            .comments-section {
+                padding: 1rem;
+            }
+
+            .comment {
+                padding: 1rem;
+            }
+
+            .comment-content {
+                margin-left: 2.5rem;
+            }
+
+            .comment-footer {
+                margin-left: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <span class="logo-text">X01</span>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dssangkien.html">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Sáng kiến</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsthidua.html">
+                            <i class="fas fa-trophy"></i>
+                            <span>Thi đua</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dstintuc.html" class="active">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Tin tức</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsvinhdanh.html">
+                            <i class="fas fa-star"></i>
+                            <span>Vinh danh</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <nav class="breadcrumb-nav">
+                <a href="#"><i class="fas fa-home"></i> Trang chủ</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="#">Tin tức</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Ứng dụng AI trong dịch vụ ngân hàng hiện đại</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Article Content -->
+        <article class="article-content">
+            <!-- Article Header -->
+            <header class="article-header">
+                <div class="article-category">Công nghệ</div>
+                <h1 class="article-title">Ứng dụng AI trong dịch vụ ngân hàng hiện đại</h1>
+                
+                <div class="article-meta">
+                    <div class="article-author">
+                        <div class="author-avatar-large">NM</div>
+                        <div class="author-info">
+                            <div class="author-name">Nguyễn Minh</div>
+                            <div class="author-role">Chuyên gia AI &amp; Machine Learning</div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>12/07/2025</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-clock"></i>
+                            <span>4 phút đọc</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-eye"></i>
+                            <span>1.2K lượt xem</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Article Actions -->
+            <div class="article-actions">
+                <button class="action-button liked" id="likeBtn">
+                    <i class="fas fa-heart"></i>
+                    <span>Thích (234)</span>
+                </button>
+                <button class="action-button" id="shareBtn">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Chia sẻ (45)</span>
+                </button>
+                <button class="action-button bookmarked" id="bookmarkBtn">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Đã lưu</span>
+                </button>
+                <button class="action-button" id="printBtn">
+                    <i class="fas fa-print"></i>
+                    <span>In</span>
+                </button>
+            </div>
+
+            <!-- Article Image -->
+            <div class="article-image">
+                <i class="fas fa-robot"></i>
+            </div>
+
+            <!-- Article Body -->
+            <div class="article-body">
+                <div class="article-text">
+                    <p><strong>Trí tuệ nhân tạo (AI) đang thay đổi toàn bộ ngành ngân hàng, từ cách chúng ta tương tác với khách hàng đến việc phân tích rủi ro và ra quyết định.</strong> Trong bài viết này, chúng ta sẽ khám phá những ứng dụng quan trọng nhất của AI trong dịch vụ ngân hàng hiện đại.</p>
+
+                    <h3>1. Chatbot và Hỗ trợ Khách hàng Thông minh</h3>
+                    <p>Các chatbot được trang bị AI có thể xử lý hàng nghìn truy vấn của khách hàng một cách đồng thời, cung cấp hỗ trợ 24/7 và giải quyết các vấn đề phức tạp mà trước đây chỉ có thể được xử lý bởi nhân viên.</p>
+
+                    <ul>
+                        <li>Trả lời tự động các câu hỏi thường gặp</li>
+                        <li>Hướng dẫn giao dịch và sử dụng dịch vụ</li>
+                        <li>Phân tích cảm xúc và tâm trạng khách hàng</li>
+                        <li>Chuyển tiếp các trường hợp phức tạp đến nhân viên chuyên nghiệp</li>
+                    </ul>
+
+                    <h3>2. Phân tích Rủi ro và Phát hiện Gian lận</h3>
+                    <p>AI có khả năng phân tích hàng triệu giao dịch trong thời gian thực để phát hiện các mẫu bất thường có thể cho thấy hoạt động gian lận. Điều này giúp bảo vệ cả ngân hàng và khách hàng khỏi các mối đe dọa về an ninh.</p>
+
+                    <h3>3. Cá nhân hóa Dịch vụ và Tư vấn Tài chính</h3>
+                    <p>Thông qua việc phân tích dữ liệu về hành vi và sở thích của khách hàng, AI có thể đưa ra những khuyến nghị tài chính phù hợp, từ việc lựa chọn sản phẩm đầu tư đến kế hoạch tiết kiệm cá nhân.</p>
+
+                    <p>Việc ứng dụng AI trong ngân hàng không chỉ nâng cao hiệu quả hoạt động mà còn tạo ra trải nghiệm tốt hơn cho khách hàng. Tuy nhiên, điều quan trọng là phải đảm bảo tính minh bạch, bảo mật và tuân thủ các quy định pháp lý khi triển khai các giải pháp AI.</p>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <section class="comments-section">
+                <div class="comments-header">
+                    <h3 class="comments-title">
+                        <i class="fas fa-comments"></i>
+                        Bình luận
+                        <span class="comments-count">27</span>
+                    </h3>
+                    
+                    <div class="sort-comments">
+                        <span>Sắp xếp:</span>
+                        <select class="sort-select" id="commentSort">
+                            <option value="newest">Mới nhất</option>
+                            <option value="oldest">Cũ nhất</option>
+                            <option value="most-liked">Nhiều thích nhất</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <div class="comment-form-header">
+                        <div class="current-user-avatar">LT</div>
+                        <div class="comment-input-wrapper">
+                            <textarea class="comment-textarea" id="commentText" placeholder="Viết bình luận của bạn..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-form-footer">
+                        <button class="comment-submit-btn" disabled="" id="submitComment">Đăng bình luận</button>
+                    </div>
+                </div>
+
+                <!-- Comments List -->
+                <div class="comments-list">
+                    <!-- Current User's Comment (Priority) -->
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="comment-avatar">LT</div>
+                                <div class="comment-author-info">
+                                    <div class="comment-author-name">Lê Thiện</div>
+                                    <div class="comment-time">30 phút trước</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-actions">
+                                <button class="comment-menu-btn" title="Tùy chọn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-content">
+                            <div class="comment-text">
+                                Thật sự ấn tượng với thành tích của anh Tùng! Tính năng Smart Transfer đã giúp tôi tiết kiệm rất nhiều thời gian khi chuyển tiền. Khả năng nhập lệnh bằng ngôn ngữ tự nhiên thật sự là một đột phá. Chúc mừng anh và team Digital Banking! 🎉
+                            </div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-stats">
+                                <i class="fas fa-heart"></i>
+                                <span>12</span>
+                            </div>
+                            
+                            <div class="comment-interaction">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>Trả lời</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Comments -->
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="comment-avatar" style="background: linear-gradient(135deg, #16a085, #1abc9c);">PL</div>
+                                <div class="comment-author-info">
+                                    <div class="comment-author-name">Phạm Lan</div>
+                                    <div class="comment-time">4 giờ trước</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-actions">
+                                <button class="comment-menu-btn" title="Tùy chọn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-content">
+                            <div class="comment-text">
+                                AI trong banking thực sự là tương lai! Đặc biệt ấn tượng với khả năng detect fraud real-time. 
+                                Tuy nhiên, cần cân bằng giữa automation và human touch để không mất đi yếu tố con người trong dịch vụ tài chính.
+                            </div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-stats">
+                                <i class="fas fa-heart"></i>
+                                <span>8</span>
+                            </div>
+                            
+                            <div class="comment-interaction">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>Trả lời</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="comment-avatar" style="background: linear-gradient(135deg, #f39c12, #e67e22);">VD</div>
+                                <div class="comment-author-info">
+                                    <div class="comment-author-name">Võ Đức</div>
+                                    <div class="comment-time">6 giờ trước</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-actions">
+                                <button class="comment-menu-btn" title="Tùy chọn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-content">
+                            <div class="comment-text">
+                                Bài viết hay và cập nhật xu hướng. Mình muốn hỏi về vấn đề security và privacy khi sử dụng AI trong banking. 
+                                Làm sao để đảm bảo dữ liệu khách hàng được bảo vệ tốt nhất?
+                            </div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-stats">
+                                <i class="fas fa-heart"></i>
+                                <span>12</span>
+                            </div>
+                            
+                            <div class="comment-interaction">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>Trả lời</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment">
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="comment-avatar" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">TH</div>
+                                <div class="comment-author-info">
+                                    <div class="comment-author-name">Trần Hải</div>
+                                    <div class="comment-time">8 giờ trước</div>
+                                </div>
+                            </div>
+                            
+                            <div class="comment-actions">
+                                <button class="comment-menu-btn" title="Tùy chọn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="comment-content">
+                            <div class="comment-text">
+                                Cảm ơn team đã chia sẻ những insights rất quý báu về AI trong banking. 
+                                Mình đặc biệt quan tâm đến phần chatbot và NLP processing. Có thể share thêm về kiến trúc technical không?
+                            </div>
+                        </div>
+                        
+                        <div class="comment-footer">
+                            <div class="comment-stats">
+                                <i class="fas fa-heart"></i>
+                                <span>5</span>
+                            </div>
+                            
+                            <div class="comment-interaction">
+                                <button class="interaction-btn">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span>Trả lời</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Show More Button -->
+                    <button class="show-more-btn">
+                        <i class="fas fa-chevron-down"></i>
+                        <span>Xem thêm 23 bình luận</span>
+                    </button>
+                </div>
+            </section>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Author Info Widget -->
+            <div class="sidebar-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">
+                        <i class="fas fa-user"></i>
+                        Về tác giả
+                    </h3>
+                </div>
+                <div class="widget-content author-widget">
+                    <div class="author-widget-avatar">NM</div>
+                    <div class="author-widget-name">Nguyễn Minh</div>
+                    <div class="author-widget-role">Chuyên gia AI &amp; Machine Learning</div>
+                    <div class="author-widget-bio">
+                        Với hơn 8 năm kinh nghiệm trong lĩnh vực AI và Machine Learning, 
+                        đã tham gia nhiều dự án triển khai AI trong ngành tài chính.
+                    </div>
+                    <div class="author-widget-stats">
+                        <div class="author-stat">
+                            <div class="author-stat-value">47</div>
+                            <div class="author-stat-label">Bài viết</div>
+                        </div>
+                        <div class="author-stat">
+                            <div class="author-stat-value">1.2K</div>
+                            <div class="author-stat-label">Người theo dõi</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">
+                        <i class="fas fa-plus"></i>
+                        Theo dõi tác giả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Related Articles Widget -->
+            <div class="sidebar-widget">
+                <div class="widget-header">
+                    <h3 class="widget-title">
+                        <i class="fas fa-newspaper"></i>
+                        Bài viết liên quan
+                    </h3>
+                </div>
+                <div class="widget-content">
+                    <div class="related-article">
+                        <div class="related-thumb">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Blockchain và bảo mật trong giao dịch tài chính</div>
+                            <div class="related-meta">
+                                <span>10/07/2025</span>
+                                <span>1.5K views</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="related-article">
+                        <div class="related-thumb">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Mobile Banking thế hệ mới với UX/UI tối ưu</div>
+                            <div class="related-meta">
+                                <span>08/07/2025</span>
+                                <span>980 views</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="related-article">
+                        <div class="related-thumb">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Big Data Analytics trong ra quyết định tài chính</div>
+                            <div class="related-meta">
+                                <span>05/07/2025</span>
+                                <span>2.1K views</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="related-article">
+                        <div class="related-thumb">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="related-info">
+                            <div class="related-title">Cloud Computing và tương lai của ngân hàng số</div>
+                            <div class="related-meta">
+                                <span>03/07/2025</span>
+                                <span>756 views</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Initialize page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeArticleActions();
+            initializeCommentForm();
+            initializeCommentInteractions();
+        });
+
+        // Article actions
+        function initializeArticleActions() {
+            // Like button
+            document.getElementById('likeBtn').addEventListener('click', function() {
+                this.classList.toggle('liked');
+                const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
+                if (this.classList.contains('liked')) {
+                    icon.className = 'fas fa-heart';
+                    text.textContent = 'Đã thích (235)';
+                } else {
+                    icon.className = 'far fa-heart';
+                    text.textContent = 'Thích (234)';
+                }
+            });
+
+            // Share button
+            document.getElementById('shareBtn').addEventListener('click', function() {
+                alert('🔗 Chia sẻ bài viết:\n\n• Sao chép liên kết\n• Chia sẻ qua email\n• Đăng lên mạng xã hội\n• Gửi qua Slack/Teams');
+            });
+
+            // Bookmark button
+            document.getElementById('bookmarkBtn').addEventListener('click', function() {
+                this.classList.toggle('bookmarked');
+                const text = this.querySelector('span');
+                
+                if (this.classList.contains('bookmarked')) {
+                    text.textContent = 'Đã lưu';
+                } else {
+                    text.textContent = 'Lưu bài viết';
+                }
+            });
+
+            // Print button
+            document.getElementById('printBtn').addEventListener('click', function() {
+                window.print();
+            });
+        }
+
+        // Comment form functionality
+        function initializeCommentForm() {
+            const textarea = document.getElementById('commentText');
+            const submitBtn = document.getElementById('submitComment');
+
+            // Enable/disable submit button
+            textarea.addEventListener('input', function() {
+                if (this.value.trim().length > 0) {
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.disabled = true;
+                }
+            });
+
+            // Submit comment
+            submitBtn.addEventListener('click', function() {
+                const commentText = textarea.value.trim();
+                if (commentText) {
+                    // Create new comment
+                    createNewComment(commentText);
+                    
+                    // Reset form
+                    textarea.value = '';
+                    submitBtn.disabled = true;
+                    
+                    // Update comments count
+                    updateCommentsCount();
+                }
+            });
+        }
+
+        // Create new comment
+        function createNewComment(text) {
+            const commentsList = document.querySelector('.comments-list');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-author">
+                        <div class="comment-avatar">LT</div>
+                        <div class="comment-author-info">
+                            <div class="comment-author-name">Lê Thiện</div>
+                            <div class="comment-time">Vừa xong</div>
+                        </div>
+                    </div>
+                    
+                    <div class="comment-actions">
+                        <button class="comment-menu-btn" title="Tùy chọn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="comment-content">
+                    <div class="comment-text">${text}</div>
+                </div>
+                
+                <div class="comment-footer">
+                    <div class="comment-stats">
+                        <i class="fas fa-heart"></i>
+                        <span>0</span>
+                    </div>
+                    
+                    <div class="comment-interaction">
+                        <button class="interaction-btn">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>Trả lời</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Insert at the beginning (priority for current user)
+            const showMoreBtn = commentsList.querySelector('.show-more-btn');
+            if (showMoreBtn) {
+                commentsList.insertBefore(newComment, showMoreBtn);
+            } else {
+                commentsList.appendChild(newComment);
+            }
+            
+            // Add interaction listeners to new comment
+            initializeCommentInteractions();
+        }
+
+        // Comment interactions
+        function initializeCommentInteractions() {
+            // Menu buttons
+            document.querySelectorAll('.comment-menu-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('📋 Menu tùy chọn:\n\n• Chỉnh sửa\n• Xóa\n• Báo cáo\n• Sao chép liên kết');
+                });
+            });
+
+            // Reply buttons
+            document.querySelectorAll('.interaction-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    alert('💬 Chức năng trả lời:\n\nMở form trả lời bình luận với mention tác giả.');
+                });
+            });
+        }
+
+        // Update comments count
+        function updateCommentsCount() {
+            const commentsCount = document.querySelectorAll('.comment').length;
+            document.querySelector('.comments-count').textContent = commentsCount;
+        }
+
+        // Show more comments
+        document.querySelector('.show-more-btn').addEventListener('click', function() {
+            alert('📄 Tải thêm bình luận:\n\nSẽ load thêm 10 bình luận tiếp theo.');
+        });
+
+        // Follow author
+        document.querySelector('.follow-btn').addEventListener('click', function() {
+            this.classList.toggle('following');
+            if (this.classList.contains('following')) {
+                this.innerHTML = '<i class="fas fa-check"></i> Đang theo dõi';
+                this.style.background = '#28a745';
+            } else {
+                this.innerHTML = '<i class="fas fa-plus"></i> Theo dõi tác giả';
+                this.style.background = '#667eea';
+            }
+        });
+
+        // Related articles click
+        document.querySelectorAll('.related-article').forEach(article => {
+            article.addEventListener('click', function() {
+                const title = this.querySelector('.related-title').textContent;
+                alert(`📖 Chuyển đến bài viết:\n\n"${title}"`);
+            });
+        });
+
+        // Comment sorting
+        document.getElementById('commentSort').addEventListener('change', function() {
+            const sortValue = this.value;
+            alert(`🔄 Sắp xếp bình luận theo: ${sortValue}`);
+        });
+    </script>
+
+
+</body></html>

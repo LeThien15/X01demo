@@ -1,0 +1,2678 @@
+<!DOCTYPE html><html lang="vi"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết Chương trình Thi đua - Cổng Thông Tin Chuyển Đổi Số</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 200px;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #74b9ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-icon i {
+            font-size: 1.4rem;
+            color: white;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            height: 100%;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .nav-menu a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .nav-menu a span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            min-width: 250px;
+            height: 40px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            flex: 1;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb-nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #5a67d8;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Program Header */
+        .program-header {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(50px, -50px);
+        }
+
+        .program-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .program-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .program-title-left {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .program-id {
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .program-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .program-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .program-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-primary:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #f39c12;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .program-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .meta-item {
+            text-align: center;
+        }
+
+        .meta-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .meta-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Status Badge - REMOVED WHITE BORDER */
+        .status-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 3;
+        }
+
+        .status-active {
+            background: #28a745;
+            color: white;
+            /* Removed border */
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 0;
+        }
+
+        .tabs-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tab-item {
+            flex: 1;
+        }
+
+        .tab-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.2rem 1rem;
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .tab-link:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .tab-link.active {
+            background: white;
+            color: #f39c12;
+            border-bottom-color: #f39c12;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            padding: 0; /* REMOVED PADDING */
+            min-height: 600px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* Tab 1: Thể lệ - NO WHITE SPACE */
+        .regulations-content {
+            width: 100%;
+            padding: 2rem; /* MOVED PADDING HERE */
+        }
+
+        .regulations-main {
+            width: 100%; /* FULL WIDTH, NO SIDEBAR */
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.2);
+        }
+
+        .section-content {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .section-content p {
+            margin-bottom: 1.2rem;
+        }
+
+        .section-content ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+
+        .criteria-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .criteria-item {
+            padding: 1.8rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            display: flex;
+            gap: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .criteria-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #f39c12;
+        }
+
+        .criteria-icon {
+            color: #f39c12;
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+            background: rgba(243, 156, 18, 0.1);
+            padding: 1rem;
+            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .criteria-content {
+            flex: 1;
+        }
+
+        .criteria-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .criteria-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .criteria-weight {
+            color: #f39c12;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid #ffcc80;
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .award-item {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .award-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .award-first .award-icon { color: #ffd700; }
+        .award-second .award-icon { color: #c0c0c0; }
+        .award-third .award-icon { color: #cd7f32; }
+        .award-encourage .award-icon { color: #28a745; }
+
+        .award-rank {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .award-prize {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f39c12;
+            margin-bottom: 0.5rem;
+        }
+
+        .award-extras {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .submission-checklist {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #c8e6c9;
+            margin-top: 1.5rem;
+        }
+
+        .checklist-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #c8e6c9;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            color: #28a745;
+            font-size: 1.1rem;
+            margin-top: 0.2rem;
+        }
+
+        .checklist-text {
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        /* Quick Info Box */
+        .quick-info-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #ffcc80;
+            margin-bottom: 2rem;
+        }
+
+        .quick-info-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f57c00;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+        }
+
+        .quick-info-label {
+            font-weight: 600;
+            color: #f57c00;
+        }
+
+        .quick-info-value {
+            font-weight: 700;
+            color: #e65100;
+        }
+
+        /* Tab 2: Kết quả */
+        .leaderboard {
+            background: white;
+        }
+
+        .leaderboard-header {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+
+        .leaderboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .leaderboard-subtitle {
+            opacity: 0.9;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .leaderboard-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rank-cell {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+
+        .participant-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .participant-dept {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .score-cell {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #f39c12;
+        }
+
+        .achievement-badges {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-gold { background: #ffd700; color: #b8860b; }
+        .badge-silver { background: #c0c0c0; color: #696969; }
+        .badge-bronze { background: #cd7f32; color: #8b4513; }
+
+        /* Tab 3: Dashboard - ENHANCED */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-filters {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.6rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .export-btn {
+            padding: 0.6rem 1.2rem;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .metric-title {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .metric-participants .metric-icon {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: #1976d2;
+        }
+
+        .metric-submissions .metric-icon {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            color: #7b1fa2;
+        }
+
+        .metric-average .metric-icon {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            color: #2e7d32;
+        }
+
+        .metric-progress .metric-icon {
+            background: linear-gradient(135deg, #fff3e0, #ffcc80);
+            color: #f57c00;
+        }
+
+        .metric-completion .metric-icon {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            color: #c2185b;
+        }
+
+        .metric-trending .metric-icon {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            color: #00695c;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.8rem;
+            line-height: 1;
+        }
+
+        .metric-change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .change-positive {
+            color: #28a745;
+        }
+
+        .change-negative {
+            color: #dc3545;
+        }
+
+        .metric-description {
+            font-size: 0.8rem;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-canvas {
+            max-height: 350px;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .analytics-card {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .analytics-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-completed { background: #28a745; }
+        .dot-inprogress { background: #ffc107; }
+        .dot-pending { background: #6c757d; }
+
+        .progress-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .progress-value {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .activity-new { background: #e3f2fd; color: #1976d2; }
+        .activity-update { background: #f3e5f5; color: #7b1fa2; }
+        .activity-complete { background: #e8f5e8; color: #2e7d32; }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        /* Tab 4: Hỏi & Đáp - IMPROVED TYPOGRAPHY */
+        .qa-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            padding: 2rem;
+        }
+
+        .questions-list {
+            background: white;
+        }
+
+        .qa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .qa-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qa-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .qa-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .question-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #f39c12;
+            transition: all 0.3s;
+        }
+
+        .question-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .question-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .author-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .question-date {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        .question-status {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .status-answered {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .question-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .question-body {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .action-link {
+            color: #f39c12;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .action-link:hover {
+            background: rgba(243, 156, 18, 0.1);
+            color: #e67e22;
+        }
+
+        .answer-section {
+            background: white;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .answer-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .admin-badge {
+            background: #28a745;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .answer-content {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .ask-question-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #f39c12;
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
+        }
+
+        .submit-btn {
+            background: #f39c12;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .submit-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        /* Thêm vào cuối thẻ <style> */
+        .status-running {
+            background: #28a745 !important;
+            color: #fff !important;
+            border: 2px solid #28a745 !important;
+        }
+        .status-running i {
+            color: #fff !important;
+        }
+        .status-running:hover {
+            background: #218838 !important;
+            border-color: #218838 !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .qa-section {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .criteria-list {
+                grid-template-columns: 1fr;
+            }
+
+            .awards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .program-header {
+                padding: 1.5rem;
+            }
+
+            .program-title {
+                font-size: 1.8rem;
+            }
+
+            .program-meta {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .tabs-nav {
+                flex-direction: column;
+            }
+
+            .regulations-content {
+                padding: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .program-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                justify-content: center;
+            }
+
+            .dashboard-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .question-item {
+                padding: 1.5rem;
+            }
+
+            .ask-question-form {
+                position: static;
+            }
+
+            .awards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .qa-section {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .program-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .leaderboard-table {
+                font-size: 0.8rem;
+            }
+
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 0.5rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .criteria-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .criteria-icon {
+                align-self: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <span class="logo-text">X01</span>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dssangkien.html">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Sáng kiến</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsthidua.html" class="active">
+                            <i class="fas fa-trophy"></i>
+                            <span>Thi đua</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dstintuc.html">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Tin tức</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsvinhdanh.html">
+                            <i class="fas fa-star"></i>
+                            <span>Vinh danh</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <nav class="breadcrumb-nav">
+                <a href="#"><i class="fas fa-home"></i> Trang chủ</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="#">Thi đua</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Thi đua Sáng kiến Xuất sắc Q3/2025</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Program Header -->
+        <div class="program-header">
+
+            
+            <div class="program-header-content">
+                <div class="program-title-row">
+                    <div class="program-title-left">
+                        <div class="program-id">#TD-2024-001</div>
+                        <h1 class="program-title">Thi đua Sáng kiến Xuất sắc Q3/2025</h1>
+                        <p class="program-description">
+                            Cuộc thi tìm kiếm và vinh danh những sáng kiến xuất sắc nhất trong quá trình chuyển đổi số. 
+                            Khuyến khích đổi mới sáng tạo và ứng dụng công nghệ tiên tiến vào hoạt động ngân hàng.
+                        </p>
+                    </div>
+                    
+                    <div class="program-actions">
+                        <button class="action-btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Tham gia thi đua
+                        </button>
+                        <button class="action-btn btn-secondary status-running">
+                            <i class="fas fa-play-circle"></i>
+                            Đang diễn ra
+                        </button>
+                    </div>
+                </div>
+
+                <div class="program-meta">
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="meta-value">01/07 - 30/09</div>
+                        <div class="meta-label">Thời gian diễn ra</div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="meta-value">156</div>
+                        <div class="meta-label">Người tham gia</div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="meta-value">500M</div>
+                        <div class="meta-label">Tổng giải thưởng</div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="meta-value">34 ngày</div>
+                        <div class="meta-label">Thời gian còn lại</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs Container -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <ul class="tabs-nav">
+                    <li class="tab-item">
+                        <button class="tab-link active" onclick="switchTab(event, 'regulations')">
+                            <i class="fas fa-scroll"></i>
+                            <span>Thể lệ</span>
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button class="tab-link" onclick="switchTab(event, 'results')">
+                            <i class="fas fa-trophy"></i>
+                            <span>Kết quả</span>
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button class="tab-link" onclick="switchTab(event, 'dashboard')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li class="tab-item">
+                        <button class="tab-link" onclick="switchTab(event, 'qa')">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Hỏi &amp; Đáp</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                <!-- Tab 1: Thể lệ - NO WHITE SPACE -->
+                <div id="regulations" class="tab-pane active">
+                    <div class="regulations-content">
+                        <!-- Quick Info Box -->
+                        <div class="quick-info-box">
+                            <div class="quick-info-title">
+                                <i class="fas fa-calendar-check"></i>
+                                Lịch trình quan trọng
+                            </div>
+                            <div class="quick-info-grid">
+                                <div class="quick-info-item">
+                                    <span class="quick-info-label">Bắt đầu:</span>
+                                    <span class="quick-info-value">01/07/2025</span>
+                                </div>
+                                <div class="quick-info-item">
+                                    <span class="quick-info-label">Hạn nộp:</span>
+                                    <span class="quick-info-value">15/08/2025</span>
+                                </div>
+                                <div class="quick-info-item">
+                                    <span class="quick-info-label">Thuyết trình:</span>
+                                    <span class="quick-info-value">25-27/08/2025</span>
+                                </div>
+                                <div class="quick-info-item">
+                                    <span class="quick-info-label">Kết quả:</span>
+                                    <span class="quick-info-value">01/09/2025</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="regulations-main">
+                            <div class="section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-info-circle"></i>
+                                    Quy định chung
+                                </h2>
+                                <div class="section-content">
+                                    <p>Cuộc thi "Thi đua Sáng kiến Xuất sắc Q3/2025" được tổ chức nhằm khuyến khích và vinh danh những ý tưởng sáng tạo, các giải pháp công nghệ tiên tiến góp phần thúc đẩy quá trình chuyển đổi số tại ngân hàng.</p>
+                                    
+                                    <p><strong>Đối tượng tham gia:</strong> Tất cả cán bộ nhân viên đang làm việc tại ngân hàng, bao gồm cả nhân viên chính thức và nhân viên hợp đồng có thời gian làm việc từ 6 tháng trở lên.</p>
+                                    
+                                    <p><strong>Thời gian tổ chức:</strong> Từ ngày 01/07/2025 đến 30/09/2025 (3 tháng)</p>
+                                    
+                                    <p><strong>Hình thức tham gia:</strong> Cá nhân hoặc nhóm (tối đa 5 người). Mỗi người chỉ được tham gia tối đa 2 sáng kiến.</p>
+
+                                    <p><strong>Phạm vi sáng kiến:</strong> Các giải pháp công nghệ, quy trình số hóa, ứng dụng AI/ML, blockchain, IoT hoặc bất kỳ ý tưởng nào có thể cải thiện hiệu quả hoạt động ngân hàng.</p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-list-ol"></i>
+                                    Tiêu chí đánh giá
+                                </h2>
+                                <ul class="criteria-list">
+                                    <li class="criteria-item">
+                                        <div class="criteria-icon">
+                                            <i class="fas fa-lightbulb"></i>
+                                        </div>
+                                        <div class="criteria-content">
+                                            <div class="criteria-title">Tính sáng tạo và đổi mới</div>
+                                            <div class="criteria-desc">
+                                                Đánh giá mức độ sáng tạo, tính độc đáo và khả năng đột phá của ý tưởng. 
+                                                Ưu tiên các giải pháp chưa từng được áp dụng hoặc có cách tiếp cận mới mẻ, 
+                                                sử dụng công nghệ tiên tiến.
+                                            </div>
+                                            <div class="criteria-weight">Trọng số: 25%</div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li class="criteria-item">
+                                        <div class="criteria-icon">
+                                            <i class="fas fa-cogs"></i>
+                                        </div>
+                                        <div class="criteria-content">
+                                            <div class="criteria-title">Tính khả thi và thực tiễn</div>
+                                            <div class="criteria-desc">
+                                                Đánh giá khả năng triển khai thực tế của sáng kiến, bao gồm tính khả thi về mặt 
+                                                công nghệ, tài chính và nguồn nhân lực. Có roadmap chi tiết và phân tích rủi ro.
+                                            </div>
+                                            <div class="criteria-weight">Trọng số: 30%</div>
+                                        </div>
+                                    </li>
+                                    
+                                    <li class="criteria-item">
+                                        <div class="criteria-icon">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <div class="criteria-content">
+                                            <div class="criteria-title">Tác động và hiệu quả</div>
+                                            <div class="criteria-desc">
+                                                Đánh giá mức độ tác động tích cực của sáng kiến đến hoạt động kinh doanh, 
+                                                trải nghiệm khách hàng và hiệu quả vận hành. Có số liệu cụ thể về ROI dự kiến.
+                                            </div>
+                                            <div class="criteria-weight">Trọng số: 25%</div>
+                                        </div>
+                                    </li>
+                                    
+                                
+                                </ul>
+                            </div>
+
+                            <div class="section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-award"></i>
+                                    Cơ cấu giải thưởng
+                                </h2>
+                                <div class="awards-grid">
+                                    <div class="award-item award-first">
+                                        <div class="award-icon">🥇</div>
+                                        <div class="award-rank">Giải Nhất</div>
+                                        <div class="award-prize">200 triệu đồng</div>
+                                        <div class="award-extras">+ Cúp vàng + Bằng khen<br>+ Cơ hội thăng tiến</div>
+                                    </div>
+                                    
+                                    <div class="award-item award-second">
+                                        <div class="award-icon">🥈</div>
+                                        <div class="award-rank">Giải Nhì (2 giải)</div>
+                                        <div class="award-prize">150 triệu đồng/giải</div>
+                                        <div class="award-extras">+ Cúp bạc + Bằng khen<br>+ Khóa đào tạo cao cấp</div>
+                                    </div>
+                                    
+                                    <div class="award-item award-third">
+                                        <div class="award-icon">🥉</div>
+                                        <div class="award-rank">Giải Ba (3 giải)</div>
+                                        <div class="award-prize">100 triệu đồng/giải</div>
+                                        <div class="award-extras">+ Cúp đồng + Bằng khen<br>+ Voucher du lịch</div>
+                                    </div>
+                                    
+                                    <div class="award-item award-encourage">
+                                        <div class="award-icon">🏆</div>
+                                        <div class="award-rank">Giải Khuyến khích (10 giải)</div>
+                                        <div class="award-prize">50 triệu đồng/giải</div>
+                                        <div class="award-extras">+ Giấy khen<br>+ Quà tặng công nghệ</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="section-content" style="margin-top: 2rem;">
+                                    <p style="font-style: italic; color: #f57c00; font-weight: 600;">
+                                        * Tất cả giải thưởng đều được miễn thuế thu nhập cá nhân theo quy định hiện hành.<br>
+                                        * Các sáng kiến xuất sắc sẽ được ưu tiên triển khai thực tế và có cơ hội nhận thêm ngân sách phát triển.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="section">
+                                <h2 class="section-title">
+                                    <i class="fas fa-upload"></i>
+                                    Hồ sơ tham gia và cách thức nộp bài
+                                </h2>
+                                <div class="submission-checklist">
+                                    <div class="checklist-title">
+                                        <i class="fas fa-check-circle"></i>
+                                        Hồ sơ tham gia bao gồm:
+                                    </div>
+                                    <ul class="checklist">
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-file-alt"></i>
+                                            </div>
+                                            <div class="checklist-text">Đơn đăng ký tham gia (theo mẫu) - có chữ ký và đóng dấu</div>
+                                        </li>
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="checklist-text">Bản mô tả chi tiết sáng kiến (10-20 trang, font Times New Roman 12pt)</div>
+                                        </li>
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-presentation"></i>
+                                            </div>
+                                            <div class="checklist-text">Slide thuyết trình (15-20 slide, định dạng PowerPoint)</div>
+                                        </li>
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-video"></i>
+                                            </div>
+                                            <div class="checklist-text">Video demo sản phẩm (tối đa 5 phút, định dạng MP4)</div>
+                                        </li>
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-chart-bar"></i>
+                                            </div>
+                                            <div class="checklist-text">Tài liệu chứng minh tính khả thi (business case, ROI analysis)</div>
+                                        </li>
+                                        <li class="checklist-item">
+                                            <div class="checklist-icon">
+                                                <i class="fas fa-code"></i>
+                                            </div>
+                                            <div class="checklist-text">Source code hoặc prototype (nếu có) - link GitHub/GitLab</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="section-content" style="margin-top: 2rem;">
+                                    <p><strong>⏰ Hạn nộp bài:</strong> 23:59 ngày 15/08/2025 (không gia hạn)</p>
+                                    <p><strong>📤 Cách thức nộp:</strong> Upload trên hệ thống tại portal.innovation.vn hoặc nộp trực tiếp tại phòng Nhân sự tầng 5</p>
+                                    <p><strong>📝 Quy trình đánh giá:</strong> Sơ loại (16-20/08) → Thuyết trình (25-27/08) → Công bố kết quả (01/09)</p>
+                                    <p><strong>📞 Hỗ trợ kỹ thuật:</strong> Hotline 1900-xxxx hoặc email: support@innovation.vn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Kết quả -->
+                <div id="results" class="tab-pane">
+                    <div style="padding: 2rem;">
+                        <div class="leaderboard">
+                            <div class="leaderboard-header">
+                                <div class="leaderboard-title">🏆 Bảng xếp hạng</div>
+                                <div class="leaderboard-subtitle">Cập nhật lần cuối: 11/07/2025 - 14:30</div>
+                            </div>
+                            
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hạng</th>
+                                        <th>Người tham gia</th>
+                                        <th>Sáng kiến</th>
+                                        <th>Điểm số</th>
+                                        <th>Thành tích</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="rank-cell rank-1">🥇 1</td>
+                                        <td class="participant-cell">
+                                            <div class="participant-avatar">NT</div>
+                                            <div class="participant-info">
+                                                <div class="participant-name">Nguyễn Văn Thành</div>
+                                                <div class="participant-dept">Phòng Công nghệ</div>
+                                            </div>
+                                        </td>
+                                        <td>AI Chatbot cho Customer Service</td>
+                                        <td class="score-cell">98.5</td>
+                                        <td>
+                                            <div class="achievement-badges">
+                                                <span class="badge badge-gold">Sáng tạo</span>
+                                                <span class="badge badge-gold">Khả thi</span>
+                                            </div>
+                                        </td>
+                                        <td>Đã hoàn thành</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="rank-cell rank-2">🥈 2</td>
+                                        <td class="participant-cell">
+                                            <div class="participant-avatar">LM</div>
+                                            <div class="participant-info">
+                                                <div class="participant-name">Lê Thị Mai</div>
+                                                <div class="participant-dept">Phòng Tài chính</div>
+                                            </div>
+                                        </td>
+                                        <td>Blockchain cho thanh toán</td>
+                                        <td class="score-cell">95.2</td>
+                                        <td>
+                                            <div class="achievement-badges">
+                                                <span class="badge badge-silver">Đột phá</span>
+                                                <span class="badge badge-gold">Tác động</span>
+                                            </div>
+                                        </td>
+                                        <td>Đang đánh giá</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="rank-cell rank-3">🥉 3</td>
+                                        <td class="participant-cell">
+                                            <div class="participant-avatar">PH</div>
+                                            <div class="participant-info">
+                                                <div class="participant-name">Phạm Văn Hưng</div>
+                                                <div class="participant-dept">Phòng Vận hành</div>
+                                            </div>
+                                        </td>
+                                        <td>IoT giám sát an ninh</td>
+                                        <td class="score-cell">92.8</td>
+                                        <td>
+                                            <div class="achievement-badges">
+                                                <span class="badge badge-bronze">An toàn</span>
+                                                <span class="badge badge-silver">Hiệu quả</span>
+                                            </div>
+                                        </td>
+                                        <td>Đã hoàn thành</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="rank-cell">4</td>
+                                        <td class="participant-cell">
+                                            <div class="participant-avatar">TV</div>
+                                            <div class="participant-info">
+                                                <div class="participant-name">Trần Thị Vân</div>
+                                                <div class="participant-dept">Phòng Marketing</div>
+                                            </div>
+                                        </td>
+                                        <td>CRM thông minh</td>
+                                        <td class="score-cell">89.5</td>
+                                        <td>
+                                            <div class="achievement-badges">
+                                                <span class="badge badge-bronze">Sáng tạo</span>
+                                            </div>
+                                        </td>
+                                        <td>Đang thực hiện</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="rank-cell">5</td>
+                                        <td class="participant-cell">
+                                            <div class="participant-avatar">HD</div>
+                                            <div class="participant-info">
+                                                <div class="participant-name">Hoàng Minh Đức</div>
+                                                <div class="participant-dept">Phòng CSKH</div>
+                                            </div>
+                                        </td>
+                                        <td>Mobile Banking 5.0</td>
+                                        <td class="score-cell">86.3</td>
+                                        <td>
+                                            <div class="achievement-badges">
+                                                <span class="badge badge-bronze">UX</span>
+                                            </div>
+                                        </td>
+                                        <td>Đang phát triển</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Dashboard - ENHANCED -->
+                <div id="dashboard" class="tab-pane">
+                    <div style="padding: 2rem;">
+                        <div class="dashboard-header">
+                            <div class="dashboard-title">
+                                <i class="fas fa-chart-line"></i>
+                                Analytics Dashboard
+                            </div>
+                            <div class="dashboard-filters">
+                                <select class="filter-select">
+                                    <option>Tất cả thời gian</option>
+                                    <option>7 ngày qua</option>
+                                    <option>30 ngày qua</option>
+                                    <option>Quý này</option>
+                                </select>
+                                <button class="export-btn">
+                                    <i class="fas fa-download"></i>
+                                    Xuất báo cáo
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Metrics Grid -->
+                        <div class="dashboard-grid">
+                            <div class="metric-card metric-participants">
+                                <div class="metric-header">
+                                    <div class="metric-title">Tổng số người tham gia</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">156</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12 tuần này
+                                </div>
+                                <div class="metric-description">
+                                    Tăng 8.3% so với cùng kỳ năm trước
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card metric-submissions">
+                                <div class="metric-header">
+                                    <div class="metric-title">Sáng kiến đã nộp</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-file-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">89</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8 tuần này
+                                </div>
+                                <div class="metric-description">
+                                    57% tỷ lệ nộp bài so với đăng ký
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card metric-average">
+                                <div class="metric-header">
+                                    <div class="metric-title">Điểm số trung bình</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">78.5</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +2.3 điểm
+                                </div>
+                                <div class="metric-description">
+                                    Chất lượng cải thiện đáng kể
+                                </div>
+                            </div>
+                            
+                            <div class="metric-card metric-progress">
+                                <div class="metric-header">
+                                    <div class="metric-title">Tiến độ tổng thể</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">65%</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    Đúng tiến độ
+                                </div>
+                                <div class="metric-description">
+                                    Dự kiến hoàn thành đúng hạn
+                                </div>
+                            </div>
+
+                            <div class="metric-card metric-completion">
+                                <div class="metric-header">
+                                    <div class="metric-title">Tỷ lệ hoàn thành</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">34%</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +5% tuần này
+                                </div>
+                                <div class="metric-description">
+                                    30/89 sáng kiến đã hoàn thành
+                                </div>
+                            </div>
+
+                            <div class="metric-card metric-trending">
+                                <div class="metric-header">
+                                    <div class="metric-title">Xu hướng tham gia</div>
+                                    <div class="metric-icon">
+                                        <i class="fas fa-trending-up"></i>
+                                    </div>
+                                </div>
+                                <div class="metric-value">+18%</div>
+                                <div class="metric-change change-positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    So với tháng trước
+                                </div>
+                                <div class="metric-description">
+                                    Mức độ quan tâm tăng cao
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section -->
+                        <div class="charts-section">
+                            <div class="chart-container">
+                                <div class="chart-title">
+                                    <i class="fas fa-chart-line"></i>
+                                    Tiến độ tham gia theo thời gian
+                                </div>
+                                <canvas id="participationChart" class="chart-canvas"></canvas>
+                            </div>
+
+                            <div class="chart-container">
+                                <div class="chart-title">
+                                    <i class="fas fa-chart-pie"></i>
+                                    Phân bổ theo trạng thái
+                                </div>
+                                <canvas id="statusChart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Phân bổ sáng kiến theo phòng ban
+                            </div>
+                            <canvas id="departmentChart" class="chart-canvas"></canvas>
+                        </div>
+
+                        <!-- Analytics Grid -->
+                        <div class="analytics-grid">
+                            <div class="analytics-card">
+                                <div class="analytics-title">
+                                    <i class="fas fa-tasks"></i>
+                                    Tiến độ theo giai đoạn
+                                </div>
+                                <ul class="progress-list">
+                                    <li class="progress-item">
+                                        <div class="progress-info">
+                                            <div class="progress-dot dot-completed"></div>
+                                            <div class="progress-label">Đăng ký tham gia</div>
+                                        </div>
+                                        <div class="progress-value">156/200</div>
+                                    </li>
+                                    <li class="progress-item">
+                                        <div class="progress-info">
+                                            <div class="progress-dot dot-completed"></div>
+                                            <div class="progress-label">Nộp hồ sơ</div>
+                                        </div>
+                                        <div class="progress-value">89/156</div>
+                                    </li>
+                                    <li class="progress-item">
+                                        <div class="progress-info">
+                                            <div class="progress-dot dot-inprogress"></div>
+                                            <div class="progress-label">Đánh giá sơ bộ</div>
+                                        </div>
+                                        <div class="progress-value">67/89</div>
+                                    </li>
+                                    <li class="progress-item">
+                                        <div class="progress-info">
+                                            <div class="progress-dot dot-pending"></div>
+                                            <div class="progress-label">Thuyết trình</div>
+                                        </div>
+                                        <div class="progress-value">0/30</div>
+                                    </li>
+                                    <li class="progress-item">
+                                        <div class="progress-info">
+                                            <div class="progress-dot dot-pending"></div>
+                                            <div class="progress-label">Công bố kết quả</div>
+                                        </div>
+                                        <div class="progress-value">0/16</div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="analytics-card">
+                                <div class="analytics-title">
+                                    <i class="fas fa-history"></i>
+                                    Hoạt động gần đây
+                                </div>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon activity-new">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-text">5 sáng kiến mới được nộp</div>
+                                            <div class="activity-time">2 giờ trước</div>
+                                        </div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon activity-update">
+                                            <i class="fas fa-edit"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-text">Cập nhật tiêu chí đánh giá</div>
+                                            <div class="activity-time">1 ngày trước</div>
+                                        </div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon activity-complete">
+                                            <i class="fas fa-check"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-text">Hoàn thành đánh giá vòng 1</div>
+                                            <div class="activity-time">2 ngày trước</div>
+                                        </div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon activity-new">
+                                            <i class="fas fa-user-plus"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-text">12 người đăng ký mới</div>
+                                            <div class="activity-time">3 ngày trước</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Hỏi & Đáp - IMPROVED -->
+                <div id="qa" class="tab-pane">
+                    <div class="qa-section">
+                        <div class="questions-list">
+                            <div class="qa-header">
+                                <h2 class="qa-title">
+                                    <i class="fas fa-comments"></i>
+                                    Hỏi &amp; Đáp
+                                </h2>
+                                <div class="qa-stats">
+                                    <div class="qa-stat">
+                                        <i class="fas fa-question-circle"></i>
+                                        28 câu hỏi
+                                    </div>
+                                    <div class="qa-stat">
+                                        <i class="fas fa-check-circle"></i>
+                                        24 đã trả lời
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <div class="question-author">
+                                        <div class="author-avatar">AN</div>
+                                        <div class="author-info">
+                                            <div class="author-name">Nguyễn Văn An</div>
+                                            <div class="question-date">10/07/2025 - 14:30</div>
+                                        </div>
+                                    </div>
+                                    <div class="question-status status-answered">Đã trả lời</div>
+                                </div>
+                                
+                                <div class="question-content">
+                                    <div class="question-title-text">Thời hạn nộp bài có thể gia hạn được không?</div>
+                                    <div class="question-body">
+                                        Em muốn hỏi về thời hạn nộp bài thi đua. Hiện tại nhóm em đang trong giai đoạn hoàn thiện sản phẩm demo, có thể xin gia hạn thêm 1 tuần được không ạ? 
+                                        Nhóm em cần thời gian để test thêm một số tính năng quan trọng.
+                                    </div>
+                                </div>
+                                
+                                <div class="answer-section">
+                                    <div class="answer-header">
+                                        <div class="author-avatar">BTC</div>
+                                        <div class="author-info">
+                                            <div class="author-name">Ban Tổ chức</div>
+                                            <span class="admin-badge">ADMIN</span>
+                                        </div>
+                                        <div class="question-date">10/07/2025 - 16:45</div>
+                                    </div>
+                                    <div class="answer-content">
+                                        Chào bạn! Thời hạn nộp bài là 15/08/2025 và sẽ không được gia hạn để đảm bảo tính công bằng cho tất cả thí sinh. Tuy nhiên, bạn có thể nộp phiên bản demo hiện tại và cập nhật sau trong quá trình thuyết trình. Chúc bạn thành công!
+                                    </div>
+                                </div>
+                                
+                                <div class="question-actions">
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        Hữu ích (12)
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-reply"></i>
+                                        Trả lời
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-share"></i>
+                                        Chia sẻ
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <div class="question-author">
+                                        <div class="author-avatar">TM</div>
+                                        <div class="author-info">
+                                            <div class="author-name">Lê Thị Mai</div>
+                                            <div class="question-date">09/07/2025 - 10:15</div>
+                                        </div>
+                                    </div>
+                                    <div class="question-status status-answered">Đã trả lời</div>
+                                </div>
+                                
+                                <div class="question-content">
+                                    <div class="question-title-text">Tiêu chí đánh giá "tính khả thi" được tính như thế nào?</div>
+                                    <div class="question-body">
+                                        Mình muốn hiểu rõ hơn về tiêu chí "tính khả thi và thực tiễn" trong rubric đánh giá. Cụ thể ban tổ chức sẽ đánh giá những yếu tố nào? 
+                                        Có cần trình bày chi tiết về kế hoạch triển khai và ngân sách không?
+                                    </div>
+                                </div>
+                                
+                                <div class="answer-section">
+                                    <div class="answer-header">
+                                        <div class="author-avatar">BTC</div>
+                                        <div class="author-info">
+                                            <div class="author-name">Ban Tổ chức</div>
+                                            <span class="admin-badge">ADMIN</span>
+                                        </div>
+                                        <div class="question-date">09/07/2025 - 15:20</div>
+                                    </div>
+                                    <div class="answer-content">
+                                        Tiêu chí "tính khả thi" bao gồm: (1) Khả năng triển khai với nguồn lực hiện có, (2) Thời gian thực hiện hợp lý, (3) Chi phí đầu tư phù hợp, (4) Tính tương thích với hệ thống hiện tại, (5) Rủi ro kỹ thuật có thể kiểm soát. Bạn nên trình bày rõ roadmap triển khai và phân tích chi phí-lợi ích.
+                                    </div>
+                                </div>
+                                
+                                <div class="question-actions">
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        Hữu ích (8)
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-reply"></i>
+                                        Trả lời
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-share"></i>
+                                        Chia sẻ
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="question-item">
+                                <div class="question-header">
+                                    <div class="question-author">
+                                        <div class="author-avatar">PH</div>
+                                        <div class="author-info">
+                                            <div class="author-name">Phạm Văn Hưng</div>
+                                            <div class="question-date">08/07/2025 - 16:22</div>
+                                        </div>
+                                    </div>
+                                    <div class="question-status status-pending">Chờ trả lời</div>
+                                </div>
+                                
+                                <div class="question-content">
+                                    <div class="question-title-text">Có thể sử dụng công nghệ open source không?</div>
+                                    <div class="question-body">
+                                        Sáng kiến của nhóm tôi có sử dụng một số thư viện và framework open source như TensorFlow, React, và MongoDB. 
+                                        Điều này có ảnh hưởng đến điểm đánh giá không? Có cần khai báo cụ thể về license và tác quyền không?
+                                    </div>
+                                </div>
+                                
+                                <div class="question-actions">
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-thumbs-up"></i>
+                                        Hữu ích (3)
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-reply"></i>
+                                        Trả lời
+                                    </a>
+                                    <a href="#" class="action-link">
+                                        <i class="fas fa-share"></i>
+                                        Chia sẻ
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ask-question-form">
+                            <h3 class="form-title">
+                                <i class="fas fa-question-circle"></i>
+                                Đặt câu hỏi mới
+                            </h3>
+                            
+                            <form>
+                                <div class="form-group">
+                                    <label class="form-label">Tiêu đề câu hỏi *</label>
+                                    <input type="text" class="form-input" placeholder="Nhập tiêu đề câu hỏi..." required="">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Nội dung chi tiết *</label>
+                                    <textarea class="form-input form-textarea" placeholder="Mô tả chi tiết câu hỏi của bạn..." required=""></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Chủ đề</label>
+                                    <select class="form-input" required="">
+                                        <option value="">Chọn chủ đề</option>
+                                        <option>Thể lệ thi đua</option>
+                                        <option>Tiêu chí đánh giá</option>
+                                        <option>Cách thức nộp bài</option>
+                                        <option>Giải thưởng</option>
+                                        <option>Kỹ thuật</option>
+                                        <option>Khác</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Gửi câu hỏi
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(evt, tabName) {
+            var i, tabpanes, tablinks;
+            
+            // Hide all tab panes
+            tabpanes = document.getElementsByClassName("tab-pane");
+            for (i = 0; i < tabpanes.length; i++) {
+                tabpanes[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tab links
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Show the selected tab pane and add active class to the button that opened the tab
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            
+            // Initialize charts if dashboard tab is selected
+            if (tabName === 'dashboard') {
+                setTimeout(initCharts, 100);
+            }
+        }
+
+        // Initialize enhanced charts
+        function initCharts() {
+            // Participation Chart
+            const participationCtx = document.getElementById('participationChart');
+            if (participationCtx && !participationCtx.chartInitialized) {
+                new Chart(participationCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tuần 1', 'Tuần 2', 'Tuần 3', 'Tuần 4', 'Tuần 5', 'Tuần 6'],
+                        datasets: [{
+                            label: 'Người tham gia',
+                            data: [20, 45, 78, 102, 134, 156],
+                            borderColor: '#f39c12',
+                            backgroundColor: 'rgba(243, 156, 18, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#f39c12',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }, {
+                            label: 'Bài nộp',
+                            data: [0, 12, 28, 45, 67, 89],
+                            borderColor: '#e67e22',
+                            backgroundColor: 'rgba(230, 126, 34, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointBackgroundColor: '#e67e22',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            }
+                        }
+                    }
+                });
+                participationCtx.chartInitialized = true;
+            }
+
+            // Status Chart (Pie)
+            const statusCtx = document.getElementById('statusChart');
+            if (statusCtx && !statusCtx.chartInitialized) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Hoàn thành', 'Đang thực hiện', 'Đánh giá', 'Chờ duyệt'],
+                        datasets: [{
+                            data: [30, 35, 15, 9],
+                            backgroundColor: [
+                                '#28a745',
+                                '#ffc107',
+                                '#17a2b8',
+                                '#6c757d'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+                statusCtx.chartInitialized = true;
+            }
+
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart');
+            if (departmentCtx && !departmentCtx.chartInitialized) {
+                new Chart(departmentCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Công nghệ', 'Tài chính', 'CSKH', 'Marketing', 'Vận hành', 'Nhân sự', 'Hành chính'],
+                        datasets: [{
+                            label: 'Số sáng kiến',
+                            data: [25, 18, 15, 12, 10, 9, 6],
+                            backgroundColor: [
+                                '#3498db',
+                                '#e74c3c',
+                                '#2ecc71',
+                                '#f39c12',
+                                '#9b59b6',
+                                '#1abc9c',
+                                '#95a5a6'
+                            ],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.1)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+                departmentCtx.chartInitialized = true;
+            }
+        }
+
+        // Form submission
+        document.querySelector('.ask-question-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> Đã gửi thành công!';
+            submitBtn.style.background = '#28a745';
+            
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.style.background = '#f39c12';
+                this.reset();
+            }, 2000);
+        });
+
+        // Action button handlers
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('🎯 Đăng ký tham gia thi đua!\n\nBạn sẽ được chuyển đến form đăng ký tham gia chương trình thi đua.');
+        });
+
+        document.querySelector('.btn-secondary').addEventListener('click', function() {
+            alert('📥 Tải xuống thể lệ!\n\nFile PDF thể lệ chi tiết sẽ được tải xuống.');
+        });
+
+        // Export button handler
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.export-btn')) {
+                alert('📊 Xuất báo cáo!\n\nBáo cáo chi tiết sẽ được tải xuống dưới dạng Excel.');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show first tab by default
+            document.querySelector('.tab-pane').classList.add('active');
+        });
+    </script>
+
+
+</body></html>

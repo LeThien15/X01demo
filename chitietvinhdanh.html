@@ -1,0 +1,2019 @@
+<!DOCTYPE html><html lang="vi"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết Vinh danh - Cổng Thông Tin Chuyển Đổi Số</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f6fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            height: 60px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 200px;
+        }
+
+        .logo-icon {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #74b9ff 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .logo-icon i {
+            font-size: 1.4rem;
+            color: white;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .logo-text {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #ffffff 0%, #e8f4fd 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-menu li {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            height: 100%;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .nav-menu a i {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .nav-menu a span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            min-width: 250px;
+            height: 40px;
+        }
+
+        .search-box input {
+            background: none;
+            border: none;
+            color: white;
+            outline: none;
+            flex: 1;
+            margin-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: white;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .breadcrumb-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb-nav a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb-nav a:hover {
+            color: #5a67d8;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Post Detail */
+        .post-detail {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .post-header {
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .author-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 1rem;
+            color: #666;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .award-badge {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+            align-self: flex-start;
+            flex-shrink: 0;
+        }
+
+        .post-content {
+            padding: 0 2rem 2rem;
+        }
+
+        .post-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .post-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .post-content-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            color: #ff9800;
+            font-size: 1.2rem;
+        }
+
+        .section-content {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-details {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ffcc80;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-title {
+            font-weight: 700;
+            color: #ef6c00;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .achievement-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .achievement-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+
+        .achievement-list li i {
+            color: #ff9800;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .impact-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #90caf9;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .impact-title {
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .impact-item {
+            text-align: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .impact-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            color: #ff9800;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid #ffcc80;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.2);
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        /* Post Actions */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            border-top: 2px solid #f8f9fa;
+            background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.8rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: white;
+            border: 2px solid #e9ecef;
+        }
+
+        .like-btn {
+            color: #666;
+        }
+
+        .like-btn.liked {
+            color: #e91e63;
+            background: #fce4ec;
+            border-color: #f8bbd9;
+        }
+
+        .like-btn:hover {
+            color: #e91e63;
+            background: #fce4ec;
+            border-color: #f8bbd9;
+            transform: scale(1.05);
+        }
+
+        .comment-btn {
+            color: #666;
+        }
+
+        .comment-btn:hover {
+            color: #2196f3;
+            background: #e3f2fd;
+            border-color: #bbdefb;
+            transform: scale(1.05);
+        }
+
+        .share-btn {
+            color: #666;
+        }
+
+        .share-btn:hover {
+            color: #4caf50;
+            background: #e8f5e8;
+            border-color: #c8e6c9;
+            transform: scale(1.05);
+        }
+
+        .post-stats {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            padding: 2rem;
+            border-top: 2px solid #f8f9fa;
+            background: #fafbfc;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .comments-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .comments-count {
+            color: #ff9800;
+        }
+
+        .comments-sort {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .sort-select {
+            padding: 0.6rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            align-items: flex-start;
+        }
+
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .comment-input-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            font-size: 1rem;
+            outline: none;
+            resize: vertical;
+            min-height: 100px;
+            background: white;
+            font-family: inherit;
+        }
+
+        .comment-input:focus {
+            border-color: #ff9800;
+            box-shadow: 0 0 0 4px rgba(255, 152, 0, 0.1);
+        }
+
+        .comment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .comment-cancel {
+            padding: 0.8rem 1.5rem;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .comment-cancel:hover {
+            background: #5a6268;
+        }
+
+        .comment-submit {
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .comment-submit:hover {
+            background: linear-gradient(135deg, #ff5722, #e64a19);
+            transform: translateY(-2px);
+        }
+
+        .comment-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Comments List */
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .comment {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .comment-content {
+            flex: 1;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid #f0f0f0;
+            min-width: 0;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .comment-author-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .comment-time {
+            color: #999;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .comment-menu {
+            position: relative;
+        }
+
+        .comment-menu-btn {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .comment-menu-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .comment-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+            min-width: 120px;
+            display: none;
+        }
+
+        .comment-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        .dropdown-item.edit {
+            color: #2196f3;
+        }
+
+        .dropdown-item.delete {
+            color: #dc3545;
+        }
+
+        .comment-text {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            word-wrap: break-word;
+        }
+
+        .comment-actions-bar {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .comment-action {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comment-action:hover {
+            color: #333;
+        }
+
+        .comment-action.liked {
+            color: #e91e63;
+        }
+
+        .reply-btn {
+            color: #2196f3;
+        }
+
+        .reply-btn:hover {
+            color: #1976d2;
+        }
+
+        /* Replies */
+        .replies {
+            margin-top: 1.5rem;
+            padding-left: 2rem;
+            border-left: 3px solid #f0f0f0;
+        }
+
+        .reply {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .reply .comment-avatar {
+            width: 40px;
+            height: 40px;
+            font-size: 0.9rem;
+        }
+
+        .reply .comment-content {
+            padding: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .show-replies-btn {
+            background: none;
+            border: none;
+            color: #2196f3;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .show-replies-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .related-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .related-post {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+        }
+
+        .related-post:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .related-post-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .related-post-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .related-post-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .related-post-meta {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Edit Mode */
+        .comment-edit-form {
+            margin-top: 1rem;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+            background: white;
+            font-family: inherit;
+            margin-bottom: 1rem;
+        }
+
+        .edit-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .edit-cancel, .edit-save {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .edit-cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .edit-cancel:hover {
+            background: #5a6268;
+        }
+
+        .edit-save {
+            background: #ff9800;
+            color: white;
+        }
+
+        .edit-save:hover {
+            background: #e68900;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1rem;
+            }
+
+            .post-header,
+            .post-content,
+            .post-actions,
+            .comments-section {
+                padding: 1.5rem;
+            }
+
+            .post-title {
+                font-size: 1.5rem;
+            }
+
+            .post-author {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .comment-form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .comment {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .achievement-list {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .action-buttons {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .comment-actions-bar {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-50px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .comment {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        /* Toast notification styles */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            z-index: 10000;
+            animation: slideInUp 0.3s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-weight: 500;
+            max-width: 400px;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <span class="logo-text">X01</span>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-home"></i>
+                            <span>Trang chủ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dssangkien.html">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Sáng kiến</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsthidua.html">
+                            <i class="fas fa-trophy"></i>
+                            <span>Thi đua</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dstintuc.html">
+                            <i class="fas fa-newspaper"></i>
+                            <span>Tin tức</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Dashboard.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dsvinhdanh.html" class="active">
+                            <i class="fas fa-star"></i>
+                            <span>Vinh danh</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm kiếm...">
+                </div>
+                
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <nav class="breadcrumb-nav">
+                <a href="#"><i class="fas fa-home"></i> Trang chủ</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="#"><i class="fas fa-star"></i> Danh sách Vinh danh</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Chi tiết Vinh danh</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Post Detail -->
+        <main class="post-detail">
+            <!-- Post Header -->
+            <div class="post-header">
+                <div class="post-author">
+                    <div class="author-avatar">NT</div>
+                    <div class="author-info">
+                        <div class="author-name">Nguyễn Thanh Tùng</div>
+                        <div class="post-meta">
+                            <span><i class="fas fa-building"></i> Chi nhánh TP.HCM</span>
+                            <span><i class="fas fa-users"></i> Đội Digital Banking</span>
+                            <span><i class="fas fa-clock"></i> 2 giờ trước</span>
+                        </div>
+                    </div>
+                    <div class="award-badge">
+                        <i class="fas fa-star"></i> Nhân viên xuất sắc
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Content -->
+            <div class="post-content">
+                <h1 class="post-title">🏆 Vinh danh "Nhà phát triển Digital Banking xuất sắc tháng 7/2025"</h1>
+                
+                <p class="post-description">
+                    Anh Nguyễn Thanh Tùng đã có những đóng góp tích cực trong việc phát triển tính năng chuyển tiền thông minh, 
+                    giúp tăng 35% lượng giao dịch và cải thiện trải nghiệm người dùng một cách đáng kể. Với kinh nghiệm 8 năm trong 
+                    lĩnh vực phát triển phần mềm ngân hàng, anh đã không ngừng đổi mới và áp dụng những công nghệ tiên tiến nhất 
+                    để mang lại giá trị thiết thực cho khách hàng và ngân hàng.
+                </p>
+
+                <!-- Journey Section -->
+                <div class="post-content-section">
+                    <div class="section-title">
+                        <i class="fas fa-route"></i>
+                        Hành trình phát triển
+                    </div>
+                    <div class="section-content">
+                        Anh Nguyễn Thanh Tùng bắt đầu hành trình của mình tại ngân hàng từ năm 2017 với vai trò Junior Developer. 
+                        Qua 8 năm làm việc, anh đã từng bước khẳng định năng lực và đam mê với công nghệ ngân hàng số. 
+                        Từ việc phát triển các tính năng cơ bản, anh đã tiến tới nghiên cứu và ứng dụng AI, Machine Learning 
+                        vào các sản phẩm ngân hàng, đặc biệt là trong lĩnh vực chuyển tiền và thanh toán.
+                    </div>
+                    <div class="section-content">
+                        Không chỉ dừng lại ở việc coding, anh Tùng còn tích cực tham gia các khóa học, hội thảo về công nghệ 
+                        Financial Technology (FinTech) và đã có 5 chứng chỉ quốc tế về AI và Blockchain. Điều đặc biệt là anh 
+                        luôn chia sẻ kiến thức với đồng nghiệp thông qua các buổi workshop nội bộ, góp phần nâng cao năng lực 
+                        chung của toàn đội.
+                    </div>
+                </div>
+
+                <!-- Innovation Section -->
+                <div class="post-content-section">
+                    <div class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Tính năng Smart Transfer - Đột phá công nghệ
+                    </div>
+                    <div class="section-content">
+                        Tính năng Smart Transfer do anh Tùng phát triển là một hệ thống chuyển tiền thông minh sử dụng AI để 
+                        dự đoán và gợi ý các giao dịch cho khách hàng. Hệ thống có khả năng học hỏi từ hành vi giao dịch của 
+                        người dùng, từ đó đưa ra các đề xuất chuyển tiền phù hợp, tiết kiệm thời gian và giảm thiểu sai sót.
+                    </div>
+                    <div class="section-content">
+                        Điểm nổi bật của tính năng này là khả năng tích hợp Natural Language Processing (NLP) cho phép khách hàng 
+                        nhập lệnh chuyển tiền bằng ngôn ngữ tự nhiên như "Chuyển 5 triệu cho mẹ" và hệ thống sẽ tự động 
+                        nhận diện người nhận, số tiền và thực hiện giao dịch một cách an toàn. Công nghệ này đã được cấp bằng 
+                        sáng chế và đang được triển khai tại 15 chi nhánh trên toàn quốc.
+                    </div>
+                </div>
+
+                <!-- Technology Stack -->
+                <div class="post-content-section">
+                    <div class="section-title">
+                        <i class="fas fa-code"></i>
+                        Công nghệ sử dụng
+                    </div>
+                    <div class="section-content">
+                        Dự án Smart Transfer được xây dựng trên nền tảng công nghệ hiện đại với kiến trúc microservices, 
+                        sử dụng Node.js và Python cho backend, React Native cho mobile app, và TensorFlow cho AI engine. 
+                        Hệ thống được deploy trên AWS với Docker containers và sử dụng Redis để cache, đảm bảo hiệu suất 
+                        xử lý cao với khả năng xử lý đồng thời hàng nghìn giao dịch.
+                    </div>
+                </div>
+
+                <div class="achievement-details">
+                    <div class="achievement-title">
+                        <i class="fas fa-trophy"></i>
+                        Thành tích nổi bật
+                    </div>
+                    <ul class="achievement-list">
+                        <li><i class="fas fa-check"></i> Phát triển tính năng Smart Transfer với AI và NLP</li>
+                        <li><i class="fas fa-check"></i> Tăng 35% lượng giao dịch chuyển tiền</li>
+                        <li><i class="fas fa-check"></i> Giảm 50% thời gian xử lý giao dịch</li>
+                        <li><i class="fas fa-check"></i> Cải thiện UX score lên 4.8/5</li>
+                        <li><i class="fas fa-check"></i> Giảm 90% lỗi giao dịch do nhầm lẫn thông tin</li>
+                        <li><i class="fas fa-check"></i> Triển khai thành công tại 15 chi nhánh</li>
+                        <li><i class="fas fa-check"></i> Đạt chứng chỉ ISO 27001 cho tính bảo mật</li>
+                        <li><i class="fas fa-check"></i> Được cấp bằng sáng chế cho thuật toán AI</li>
+                    </ul>
+                </div>
+
+                <!-- Impact Section -->
+                <div class="impact-section">
+                    <div class="impact-title">
+                        <i class="fas fa-chart-line"></i>
+                        Tác động tích cực
+                    </div>
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <div class="impact-number">1.2M+</div>
+                            <div class="impact-label">Giao dịch đã xử lý</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-number">95%</div>
+                            <div class="impact-label">Độ hài lòng khách hàng</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-number">4.2 tỷ</div>
+                            <div class="impact-label">VNĐ tiết kiệm chi phí</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-number">24/7</div>
+                            <div class="impact-label">Hoạt động liên tục</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future Plans -->
+                <div class="post-content-section">
+                    <div class="section-title">
+                        <i class="fas fa-rocket"></i>
+                        Kế hoạch tương lai
+                    </div>
+                    <div class="section-content">
+                        Trong thời gian tới, anh Tùng và team Digital Banking sẽ tiếp tục phát triển phiên bản 2.0 của 
+                        Smart Transfer với tính năng Voice Banking, cho phép khách hàng thực hiện giao dịch bằng giọng nói. 
+                        Đồng thời, team cũng đang nghiên cứu tích hợp Blockchain để nâng cao tính bảo mật và minh bạch 
+                        của các giao dịch.
+                    </div>
+                    <div class="section-content">
+                        Ngoài ra, anh cũng đang chuẩn bị cho chương trình đào tạo "AI in Banking" nhằm chia sẻ kiến thức 
+                        và kinh nghiệm thực tiễn với các developer trẻ trong ngành ngân hàng. Mục tiêu là xây dựng một 
+                        cộng đồng developer mạnh mẽ, luôn đi đầu trong việc ứng dụng công nghệ mới.
+                    </div>
+                </div>
+
+                <div class="post-tags">
+                    <span class="tag">Digital Banking</span>
+                    <span class="tag">Innovation</span>
+                    <span class="tag">UX Design</span>
+                    <span class="tag">Fintech</span>
+                    <span class="tag">AI Technology</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">Smart Transfer</span>
+                </div>
+
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23f8f9fa'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23666' font-family='Arial' font-size='20'%3EThanh Tùng nhận giải thưởng Digital Banking%3C/text%3E%3C/svg%3E" alt="Lễ trao giải" class="post-image">
+            </div>
+
+            <!-- Post Actions -->
+            <div class="post-actions">
+                <div class="action-buttons">
+                    <button class="action-btn like-btn" id="likeBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">156</span>
+                    </button>
+                    <button class="action-btn comment-btn">
+                        <i class="fas fa-comment"></i>
+                        <span class="comment-count">27</span>
+                    </button>
+                    <button class="action-btn share-btn">
+                        <i class="fas fa-share"></i>
+                        Chia sẻ
+                    </button>
+                </div>
+                <div class="post-stats">
+                    <span>156 lượt thích</span>
+                    <span>27 bình luận</span>
+                </div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <div class="comments-title">
+                        <i class="fas fa-comments"></i>
+                        Bình luận <span class="comments-count">(27)</span>
+                    </div>
+                    <div class="comments-sort">
+                        <span class="sort-label">Sắp xếp:</span>
+                        <select class="sort-select" id="commentSort">
+                            <option value="newest">Mới nhất</option>
+                            <option value="oldest">Cũ nhất</option>
+                            <option value="most-liked">Nhiều thích nhất</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <div class="comment-avatar">LT</div>
+                    <div class="comment-input-wrapper">
+                        <textarea class="comment-input" id="commentInput" placeholder="Viết bình luận của bạn..."></textarea>
+                        <div class="comment-actions">
+                            <button class="comment-cancel" id="commentCancel" style="display: none;">Hủy</button>
+                            <button class="comment-submit" id="commentSubmit" disabled="">Đăng bình luận</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments List -->
+                <div class="comments-list" id="commentsList">
+                    <!-- Own Comment (Priority but styled like others) -->
+                    <div class="comment" data-comment-id="own-1">
+                        <div class="comment-avatar">LT</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-author-info">
+                                    <div class="comment-author">Lê Thiện</div>
+                                    <div class="comment-time">30 phút trước</div>
+                                </div>
+                                <div class="comment-menu">
+                                    <button class="comment-menu-btn" onclick="toggleCommentMenu('own-1')">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="comment-dropdown" id="menu-own-1">
+                                        <button class="dropdown-item edit" onclick="editComment('own-1')">
+                                            <i class="fas fa-edit"></i> Chỉnh sửa
+                                        </button>
+                                        <button class="dropdown-item delete" onclick="deleteComment('own-1')">
+                                            <i class="fas fa-trash"></i> Xóa
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-text" id="text-own-1">
+                                Thật sự rất ấn tượng với thành tích của anh Tùng! Tính năng Smart Transfer đã giúp tôi tiết kiệm rất nhiều thời gian khi chuyển tiền. Khả năng nhập lệnh bằng ngôn ngữ tự nhiên thật sự là một đột phá. Chúc mừng anh và team Digital Banking! 🎉
+                            </div>
+                            <div class="comment-actions-bar">
+                                <button class="comment-action like-action" onclick="likeComment('own-1')">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">12</span>
+                                </button>
+                                <button class="comment-action reply-btn" onclick="showReplyForm('own-1')">
+                                    <i class="fas fa-reply"></i>
+                                    Trả lời
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Comments -->
+                    <div class="comment" data-comment-id="1">
+                        <div class="comment-avatar">LH</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-author-info">
+                                    <div class="comment-author">Lê Hồng</div>
+                                    <div class="comment-time">1 giờ trước</div>
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                Chúc mừng anh Tùng! Thành tích rất ấn tượng. Tính năng AI trong Smart Transfer thật sự là một bước đột phá trong ngành banking. Mong sẽ sớm được trải nghiệm phiên bản 2.0 với Voice Banking 👏
+                            </div>
+                            <div class="comment-actions-bar">
+                                <button class="comment-action like-action" onclick="likeComment('1')">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">18</span>
+                                </button>
+                                <button class="comment-action reply-btn" onclick="showReplyForm('1')">
+                                    <i class="fas fa-reply"></i>
+                                    Trả lời
+                                </button>
+                            </div>
+                            
+                            <!-- Replies -->
+                            <div class="replies" id="replies-1" style="display: none;">
+                                <div class="reply">
+                                    <div class="comment-avatar">NT</div>
+                                    <div class="comment-content">
+                                        <div class="comment-header">
+                                            <div class="comment-author-info">
+                                                <div class="comment-author">Nguyễn Thanh Tùng</div>
+                                                <div class="comment-time">45 phút trước</div>
+                                            </div>
+                                        </div>
+                                        <div class="comment-text">
+                                            Cảm ơn chị Hồng! Đây là thành quả của cả team Digital Banking. Voice Banking sẽ ra mắt trong Q4/2025, chúng tôi đang test để đảm bảo tính bảo mật tuyệt đối.
+                                        </div>
+                                        <div class="comment-actions-bar">
+                                            <button class="comment-action like-action" onclick="likeComment('reply-1-1')">
+                                                <i class="fas fa-heart"></i>
+                                                <span class="like-count">8</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="show-replies-btn" onclick="toggleReplies('1')">
+                                <i class="fas fa-reply"></i> Xem 1 phản hồi
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="comment" data-comment-id="2">
+                        <div class="comment-avatar">PT</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-author-info">
+                                    <div class="comment-author">Phạm Thủy</div>
+                                    <div class="comment-time">45 phút trước</div>
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                Tính năng Smart Transfer thật sự rất hữu ích. Giao diện dễ sử dụng và xử lý nhanh chóng. Tôi đã tiết kiệm được rất nhiều thời gian. Cảm ơn team! 💪
+                            </div>
+                            <div class="comment-actions-bar">
+                                <button class="comment-action like-action" onclick="likeComment('2')">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">15</span>
+                                </button>
+                                <button class="comment-action reply-btn" onclick="showReplyForm('2')">
+                                    <i class="fas fa-reply"></i>
+                                    Trả lời
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment" data-comment-id="3">
+                        <div class="comment-avatar">MH</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-author-info">
+                                    <div class="comment-author">Mai Hoàng</div>
+                                    <div class="comment-time">20 phút trước</div>
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                Tuyệt vời! Anh Tùng xứng đáng được vinh danh. Khả năng tích hợp NLP vào banking là một bước nhảy vọt. Công nghệ AI trong banking đang ngày càng phát triển 🚀
+                            </div>
+                            <div class="comment-actions-bar">
+                                <button class="comment-action like-action liked" onclick="likeComment('3')">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">22</span>
+                                </button>
+                                <button class="comment-action reply-btn" onclick="showReplyForm('3')">
+                                    <i class="fas fa-reply"></i>
+                                    Trả lời
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comment" data-comment-id="4">
+                        <div class="comment-avatar">DK</div>
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-author-info">
+                                    <div class="comment-author">Đặng Khoa</div>
+                                    <div class="comment-time">15 phút trước</div>
+                                </div>
+                            </div>
+                            <div class="comment-text">
+                                Rất ấn tượng với bằng sáng chế cho thuật toán AI! Anh Tùng là tấm gương để chúng tôi học hỏi trong việc nghiên cứu và phát triển công nghệ.
+                            </div>
+                            <div class="comment-actions-bar">
+                                <button class="comment-action like-action" onclick="likeComment('4')">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">9</span>
+                                </button>
+                                <button class="comment-action reply-btn" onclick="showReplyForm('4')">
+                                    <i class="fas fa-reply"></i>
+                                    Trả lời
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Related Posts -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">
+                    <i class="fas fa-star"></i>
+                    Bài vinh danh liên quan
+                </div>
+                <div class="related-posts">
+                    <div class="related-post">
+                        <div class="related-post-image">AI</div>
+                        <div class="related-post-content">
+                            <div class="related-post-title">Đội AI/ML nhận giải "Sáng kiến công nghệ xuất sắc"</div>
+                            <div class="related-post-meta">5 giờ trước • 234 lượt thích</div>
+                        </div>
+                    </div>
+                    
+                    <div class="related-post">
+                        <div class="related-post-image">VH</div>
+                        <div class="related-post-content">
+                            <div class="related-post-title">Dự án "Zero Trust Security" đạt giải An ninh mạng</div>
+                            <div class="related-post-meta">1 ngày trước • 89 lượt thích</div>
+                        </div>
+                    </div>
+                    
+                    <div class="related-post">
+                        <div class="related-post-image">MT</div>
+                        <div class="related-post-content">
+                            <div class="related-post-title">Sáng kiến "Voice Banking Assistant" - Đột phá UX</div>
+                            <div class="related-post-meta">2 ngày trước • 198 lượt thích</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Info -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">
+                    <i class="fas fa-user"></i>
+                    Thông tin tác giả
+                </div>
+                <div class="author-profile">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="author-avatar" style="width: 60px; height: 60px; font-size: 1.2rem;">NT</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 1.1rem;">Nguyễn Thanh Tùng</div>
+                            <div style="color: #666; font-size: 0.9rem;">Senior Developer</div>
+                        </div>
+                    </div>
+                    <div style="color: #666; line-height: 1.6; font-size: 0.95rem; margin-bottom: 1rem;">
+                        8 năm kinh nghiệm trong phát triển phần mềm ngân hàng. Chuyên về Digital Banking và AI/ML.
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">AI/ML Expert</span>
+                        <span style="background: #e8f5e8; color: #388e3c; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">FinTech</span>
+                        <span style="background: #fff3e0; color: #f57c00; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Blockchain</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = "Lê Thiện ";
+        let comments = [];
+        let editingCommentId = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            loadComments();
+        });
+
+        // Event listeners
+        function initializeEventListeners() {
+            // Comment input
+            const commentInput = document.getElementById('commentInput');
+            const commentSubmit = document.getElementById('commentSubmit');
+            const commentCancel = document.getElementById('commentCancel');
+
+            commentInput.addEventListener('input', function() {
+                const hasContent = this.value.trim().length > 0;
+                commentSubmit.disabled = !hasContent;
+                commentCancel.style.display = hasContent ? 'block' : 'none';
+            });
+
+            commentSubmit.addEventListener('click', submitComment);
+            commentCancel.addEventListener('click', cancelComment);
+
+            // Like button
+            document.getElementById('likeBtn').addEventListener('click', togglePostLike);
+
+            // Share button
+            document.querySelector('.share-btn').addEventListener('click', sharePost);
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.comment-menu')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            // Comment sort
+            document.getElementById('commentSort').addEventListener('change', sortComments);
+        }
+
+        // Submit comment
+        function submitComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+
+            const newComment = {
+                id: 'new-' + Date.now(),
+                author: currentUser,
+                text: text,
+                time: 'Vừa xong',
+                likes: 0,
+                isOwn: true,
+                replies: []
+            };
+
+            addCommentToDOM(newComment, true);
+            input.value = '';
+            document.getElementById('commentSubmit').disabled = true;
+            document.getElementById('commentCancel').style.display = 'none';
+            
+            updateCommentsCount(1);
+            showToast('Đã đăng bình luận thành công!');
+        }
+
+        // Cancel comment
+        function cancelComment() {
+            const input = document.getElementById('commentInput');
+            input.value = '';
+            document.getElementById('commentSubmit').disabled = true;
+            document.getElementById('commentCancel').style.display = 'none';
+        }
+
+        // Add comment to DOM
+        function addCommentToDOM(comment, isNew = false) {
+            const commentsList = document.getElementById('commentsList');
+            const commentElement = createCommentElement(comment);
+            
+            if (isNew && comment.isOwn) {
+                // Add own new comments at the top but after existing own comment
+                const existingOwnComment = commentsList.querySelector('[data-comment-id="own-1"]');
+                if (existingOwnComment) {
+                    existingOwnComment.insertAdjacentHTML('afterend', commentElement);
+                } else {
+                    commentsList.insertAdjacentHTML('afterbegin', commentElement);
+                }
+            } else {
+                commentsList.insertAdjacentHTML('beforeend', commentElement);
+            }
+        }
+
+        // Create comment element
+        function createCommentElement(comment) {
+            const initials = comment.author.split(' ').map(word => word[0]).join('').toUpperCase();
+            const isOwn = comment.isOwn;
+            
+            return `
+                <div class="comment" data-comment-id="${comment.id}">
+                    <div class="comment-avatar">${initials}</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="comment-author-info">
+                                <div class="comment-author">${comment.author}</div>
+                                <div class="comment-time">${comment.time}</div>
+                            </div>
+                            ${isOwn ? `
+                            <div class="comment-menu">
+                                <button class="comment-menu-btn" onclick="toggleCommentMenu('${comment.id}')">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <div class="comment-dropdown" id="menu-${comment.id}">
+                                    <button class="dropdown-item edit" onclick="editComment('${comment.id}')">
+                                        <i class="fas fa-edit"></i> Chỉnh sửa
+                                    </button>
+                                    <button class="dropdown-item delete" onclick="deleteComment('${comment.id}')">
+                                        <i class="fas fa-trash"></i> Xóa
+                                    </button>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <div class="comment-text" id="text-${comment.id}">
+                            ${comment.text}
+                        </div>
+                        <div class="comment-actions-bar">
+                            <button class="comment-action like-action ${comment.liked ? 'liked' : ''}" onclick="likeComment('${comment.id}')">
+                                <i class="fas fa-heart"></i>
+                                <span class="like-count">${comment.likes}</span>
+                            </button>
+                            <button class="comment-action reply-btn" onclick="showReplyForm('${comment.id}')">
+                                <i class="fas fa-reply"></i>
+                                Trả lời
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle comment menu
+        function toggleCommentMenu(commentId) {
+            closeAllDropdowns();
+            const menu = document.getElementById(`menu-${commentId}`);
+            if (menu) {
+                menu.classList.toggle('show');
+            }
+        }
+
+        // Close all dropdowns
+        function closeAllDropdowns() {
+            document.querySelectorAll('.comment-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        }
+
+        // Edit comment
+        function editComment(commentId) {
+            closeAllDropdowns();
+            
+            if (editingCommentId) return; // Prevent multiple edits
+            
+            editingCommentId = commentId;
+            const textElement = document.getElementById(`text-${commentId}`);
+            const currentText = textElement.textContent;
+            
+            textElement.innerHTML = `
+                <div class="comment-edit-form">
+                    <textarea class="edit-input" id="edit-${commentId}">${currentText}</textarea>
+                    <div class="edit-actions">
+                        <button class="edit-cancel" onclick="cancelEdit('${commentId}', '${currentText.replace(/'/g, "\\'")}')">Hủy</button>
+                        <button class="edit-save" onclick="saveEdit('${commentId}')">Lưu</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById(`edit-${commentId}`).focus();
+        }
+
+        // Cancel edit
+        function cancelEdit(commentId, originalText) {
+            const textElement = document.getElementById(`text-${commentId}`);
+            textElement.innerHTML = originalText;
+            editingCommentId = null;
+        }
+
+        // Save edit
+        function saveEdit(commentId) {
+            const editInput = document.getElementById(`edit-${commentId}`);
+            const newText = editInput.value.trim();
+            
+            if (!newText) {
+                showToast('Bình luận không thể để trống!');
+                return;
+            }
+            
+            const textElement = document.getElementById(`text-${commentId}`);
+            textElement.innerHTML = newText;
+            editingCommentId = null;
+            
+            showToast('Đã cập nhật bình luận!');
+        }
+
+        // Delete comment
+        function deleteComment(commentId) {
+            closeAllDropdowns();
+            
+            if (confirm('Bạn có chắc muốn xóa bình luận này?')) {
+                const commentElement = document.querySelector(`[data-comment-id="${commentId}"]`);
+                if (commentElement) {
+                    commentElement.style.animation = 'slideUp 0.3s ease-out reverse';
+                    setTimeout(() => {
+                        commentElement.remove();
+                        updateCommentsCount(-1);
+                        showToast('Đã xóa bình luận!');
+                    }, 300);
+                }
+            }
+        }
+
+        // Like comment
+        function likeComment(commentId) {
+            const likeBtn = document.querySelector(`[data-comment-id="${commentId}"] .like-action`);
+            const likeCount = likeBtn.querySelector('.like-count');
+            const currentCount = parseInt(likeCount.textContent);
+            
+            if (likeBtn.classList.contains('liked')) {
+                likeBtn.classList.remove('liked');
+                likeCount.textContent = currentCount - 1;
+                showToast('Đã bỏ thích bình luận');
+            } else {
+                likeBtn.classList.add('liked');
+                likeCount.textContent = currentCount + 1;
+                showToast('Đã thích bình luận');
+                createHeartAnimation(likeBtn);
+            }
+        }
+
+        // Show reply form
+        function showReplyForm(commentId) {
+            // Implementation for reply form
+            showToast('Tính năng trả lời đang được phát triển!');
+        }
+
+        // Toggle replies
+        function toggleReplies(commentId) {
+            const replies = document.getElementById(`replies-${commentId}`);
+            const btn = replies.nextElementSibling;
+            
+            if (replies.style.display === 'none') {
+                replies.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-reply"></i> Ẩn phản hồi';
+            } else {
+                replies.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-reply"></i> Xem 1 phản hồi';
+            }
+        }
+
+        // Toggle post like
+        function togglePostLike() {
+            const likeBtn = document.getElementById('likeBtn');
+            const likeCount = likeBtn.querySelector('.like-count');
+            const currentCount = parseInt(likeCount.textContent);
+            
+            if (likeBtn.classList.contains('liked')) {
+                likeBtn.classList.remove('liked');
+                likeCount.textContent = currentCount - 1;
+                showToast('Đã bỏ thích bài vinh danh');
+            } else {
+                likeBtn.classList.add('liked');
+                likeCount.textContent = currentCount + 1;
+                showToast('Đã thích bài vinh danh');
+                createHeartAnimation(likeBtn);
+            }
+            
+            updatePostStats();
+        }
+
+        // Share post
+        function sharePost() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Vinh danh "Nhà phát triển Digital Banking xuất sắc"',
+                    text: 'Xem bài vinh danh này trên cổng thông tin chuyển đổi số',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Đã sao chép liên kết bài vinh danh');
+            }
+        }
+
+        // Update comments count
+        function updateCommentsCount(change) {
+            const countElements = document.querySelectorAll('.comment-count, .comments-count');
+            countElements.forEach(element => {
+                const currentCount = parseInt(element.textContent.replace(/[^\d]/g, ''));
+                const newCount = currentCount + change;
+                element.textContent = element.textContent.includes('(') ? `(${newCount})` : newCount;
+            });
+        }
+
+        // Update post stats
+        function updatePostStats() {
+            const likeCount = document.querySelector('.like-count').textContent;
+            const commentCount = document.querySelector('.comment-count').textContent;
+            
+            const statsElement = document.querySelector('.post-stats');
+            statsElement.innerHTML = `
+                <span>${likeCount} lượt thích</span>
+                <span>${commentCount} bình luận</span>
+            `;
+        }
+
+        // Sort comments
+        function sortComments() {
+            const sortValue = document.getElementById('commentSort').value;
+            showToast(`Đã sắp xếp theo: ${document.getElementById('commentSort').selectedOptions[0].text}`);
+        }
+
+        // Create heart animation
+        function createHeartAnimation(btn) {
+            const heart = document.createElement('i');
+            heart.className = 'fas fa-heart';
+            heart.style.cssText = `
+                position: absolute;
+                color: #e91e63;
+                font-size: 1.5rem;
+                pointer-events: none;
+                animation: heartFloat 1.2s ease-out forwards;
+                z-index: 1000;
+            `;
+            
+            const rect = btn.getBoundingClientRect();
+            heart.style.left = rect.left + rect.width / 2 + 'px';
+            heart.style.top = rect.top + 'px';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 1200);
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideInUp 0.3s ease-out reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Load comments (mock data)
+        function loadComments() {
+            // Comments are already in HTML, this could load from API
+            console.log('Comments loaded');
+        }
+    </script>
+
+
+</body></html>
